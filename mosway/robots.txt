@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mahdi-islam.onrender.com/mosway/sitemap.xml
+# TODO: after deploying, replace the domain below with your real domain.
+Sitemap: https://your-domain.example.com/sitemap.xml

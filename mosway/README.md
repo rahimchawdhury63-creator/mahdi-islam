@@ -46,6 +46,27 @@ python3 -m http.server 8000
 # → http://localhost:8000
 ```
 
+## 🌐 Deployment & domain
+
+This portfolio is **100% standalone** — it contains zero references to any other
+site/brand. All SEO URLs in `index.html` (canonical, Open Graph, JSON-LD) are
+**relative**, so they automatically resolve to whatever domain you deploy on.
+
+After deploying, for maximum SEO compatibility:
+
+1. In `sitemap.xml` + `robots.txt`, replace `https://your-domain.example.com`
+   with your real domain.
+2. Submit the sitemap in Google Search Console.
+3. (Optional) swap the relative canonical/OG URLs in `index.html` for absolute
+   ones on your domain.
+
+## 🖼 Logo
+
+`assets/img/logo.png` is the official **MOSWAY** wordmark (white pixel text on
+green). Favicons + touch icons are generated from the same master. To replace
+with the exact YouTube avatar file, just overwrite `logo.png` / `logo-512.png` /
+`favicon-*.png` / `apple-touch-icon.png` — no code changes needed.
+
 ## ✏️ Updating content
 
 All channel data lives in **`js/01-data.js`** — stats, videos, builds, mobs, schedule, FAQs, ticker. Edit that one file, no HTML surgery needed.
