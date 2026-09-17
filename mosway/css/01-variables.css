@@ -1,0 +1,148 @@
+/* ============================================================
+   MOSWAY — 01. VARIABLES (Minecraft Design Token System)
+   Three realms: Overworld (default) / Nether / The End
+   ============================================================ */
+
+:root {
+  /* ---- Brand ---- */
+  --brand: #44bd32;
+  --brand-dark: #2f8f22;
+  --brand-light: #7bed6f;
+
+  /* ---- Overworld (default dark) ---- */
+  --bg-0: #0b0e13;
+  --bg-1: #10141c;
+  --bg-2: #161c27;
+  --bg-3: #1e2635;
+  --panel: #141a24;
+  --panel-2: #1b2230;
+
+  --ink: #f4f7fb;
+  --ink-dim: #c3ccd9;
+  --ink-mute: #8b96a9;
+
+  --accent: #44bd32;          /* grass green */
+  --accent-2: #ffd32a;        /* gold */
+  --accent-3: #4bcffa;        /* diamond */
+  --accent-4: #ef5777;        /* redstone */
+  --accent-5: #a55eea;        /* enchant */
+
+  --line: #2a3345;
+  --line-soft: rgba(255, 255, 255, .08);
+
+  /* ---- Minecraft block palette ---- */
+  --mc-grass: #5d9c37;
+  --mc-grass-hi: #7cbf4e;
+  --mc-dirt: #7a5230;
+  --mc-dirt-dark: #5a3b21;
+  --mc-stone: #7d7d7d;
+  --mc-stone-dark: #525252;
+  --mc-plank: #a8804f;
+  --mc-log: #6b5334;
+  --mc-diamond: #4aedd9;
+  --mc-gold: #fcdb05;
+  --mc-redstone: #ff3b3b;
+  --mc-lapis: #345ecb;
+  --mc-obsidian: #14101f;
+  --mc-bedrock: #2b2b2b;
+  --mc-xp: #7cfc00;
+  --mc-hp: #ff2030;
+
+  /* ---- Surfaces ---- */
+  --card-shadow: 0 18px 45px rgba(0, 0, 0, .45);
+  --pop-shadow: 0 6px 0 rgba(0, 0, 0, .55);
+  --glow-green: 0 0 24px rgba(68, 189, 50, .45);
+  --glow-gold: 0 0 24px rgba(255, 211, 42, .4);
+
+  /* ---- Type ---- */
+  --font-pixel: "Minecraft", "Press Start 2P", "Courier New", monospace;
+  --font-display: "Press Start 2P", "Minecraft", monospace;
+  --font-body: "Rubik", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --fs-hero: clamp(1.6rem, 1.05rem + 3.2vw, 4.2rem);
+  --fs-h2: clamp(1.05rem, .8rem + 1.7vw, 2rem);
+  --fs-h3: clamp(.95rem, .85rem + .6vw, 1.25rem);
+  --fs-body: clamp(.92rem, .86rem + .35vw, 1.08rem);
+  --fs-small: clamp(.76rem, .72rem + .25vw, .88rem);
+
+  /* ---- Shape & motion ---- */
+  --radius: 10px;
+  --radius-lg: 18px;
+  --border-w: 3px;
+  --ease-pop: cubic-bezier(.2, 1.4, .35, 1);
+  --ease-smooth: cubic-bezier(.22, .61, .36, 1);
+  --speed-1: .18s;
+  --speed-2: .32s;
+  --speed-3: .6s;
+
+  /* ---- Layout ---- */
+  --nav-h: 72px;
+  --wrap: min(1200px, 92vw);
+  --section-pad: clamp(3.5rem, 2.4rem + 5vw, 7rem);
+
+  /* ---- Textures (pure CSS) ---- */
+  --tex-dirt:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 2px, transparent 2px 7px),
+    linear-gradient(180deg, #3a2a1a, #241a10);
+  --tex-grid:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+}
+
+/* ============ REALM: NETHER ============ */
+[data-realm="nether"] {
+  --bg-0: #120607;
+  --bg-1: #1a090b;
+  --bg-2: #241014;
+  --bg-3: #31161c;
+  --panel: #200d11;
+  --panel-2: #2b1218;
+  --ink: #fff3ec;
+  --ink-dim: #e0bfae;
+  --ink-mute: #a07a6b;
+  --accent: #ff5a3c;
+  --accent-2: #ffb02a;
+  --accent-3: #ff8a5c;
+  --accent-4: #ff3b3b;
+  --accent-5: #c44dff;
+  --brand: #ff5a3c;
+  --brand-dark: #c73a22;
+  --brand-light: #ff9a7a;
+  --line: #4a2229;
+  --glow-green: 0 0 24px rgba(255, 90, 60, .5);
+  --glow-gold: 0 0 24px rgba(255, 176, 42, .45);
+}
+
+/* ============ REALM: THE END ============ */
+[data-realm="end"] {
+  --bg-0: #0a0714;
+  --bg-1: #0f0a1e;
+  --bg-2: #171130;
+  --bg-3: #211844;
+  --panel: #140f28;
+  --panel-2: #1d1540;
+  --ink: #f1eaff;
+  --ink-dim: #c4b5e8;
+  --ink-mute: #8d7fb3;
+  --accent: #b26bff;
+  --accent-2: #f3ff5e;
+  --accent-3: #5ef2ff;
+  --accent-4: #ff5ec4;
+  --accent-5: #7c5cff;
+  --brand: #b26bff;
+  --brand-dark: #7f3fd1;
+  --brand-light: #d5a8ff;
+  --line: #352a5e;
+  --glow-green: 0 0 24px rgba(178, 107, 255, .5);
+  --glow-gold: 0 0 24px rgba(243, 255, 94, .35);
+}
+
+/* ============ Light (daylight) readability boost ============ */
+@media (prefers-contrast: more) {
+  :root {
+    --ink-dim: #e8edf5;
+    --ink-mute: #b9c2d2;
+    --line-soft: rgba(255, 255, 255, .16);
+  }
+}

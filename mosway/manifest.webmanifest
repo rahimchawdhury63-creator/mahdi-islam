@@ -1,0 +1,17 @@
+{
+  "name": "MOSWAY — Official Gaming Portfolio",
+  "short_name": "MOSWAY",
+  "description": "Official portfolio of Mosway (@MoswayGaming): Minecraft Shorts, survival series, challenges and community.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#10141c",
+  "theme_color": "#44bd32",
+  "categories": ["entertainment", "games"],
+  "icons": [
+    { "src": "assets/img/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "assets/img/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/img/logo-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

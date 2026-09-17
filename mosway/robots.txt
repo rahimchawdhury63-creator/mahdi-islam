@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mahdi-islam.onrender.com/mosway/sitemap.xml
