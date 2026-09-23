@@ -1,3 +1,4 @@
+import { GALLERY_ENABLED } from "../content/gallery";
 import { SITE } from "../content/profile";
 
 export type RouteKey =
@@ -6,6 +7,7 @@ export type RouteKey =
   | "education"
   | "skills"
   | "experience"
+  | "gallery"
   | "faq"
   | "contact";
 
@@ -26,9 +28,11 @@ export type RouteMeta = {
   changefreq: "weekly" | "monthly" | "yearly";
   /** schema.org type of the page wrapper node. */
   pageType: "ProfilePage" | "CollectionPage" | "AboutPage" | "ContactPage" | "FAQPage";
+  /** Routes that only exist when their content exists (e.g. the photo album). */
+  requiresContent?: boolean;
 };
 
-export const ROUTES: RouteMeta[] = [
+const ALL_ROUTES: RouteMeta[] = [
   {
     key: "home",
     path: "/",
@@ -122,6 +126,25 @@ export const ROUTES: RouteMeta[] = [
     pageType: "CollectionPage",
   },
   {
+    key: "gallery",
+    path: "/gallery/",
+    title: "Photographs — Md Mayeed Khan Shuvon | Profile Photo Gallery",
+    description:
+      "Published photographs of Md Mayeed Khan Shuvon — the primary profile portrait plus outdoor photographs, each with a caption and description for image search and accessibility.",
+    h1: "Photographs of Md Mayeed Khan Shuvon",
+    navLabel: "Gallery",
+    keywords: [
+      "Md Mayeed Khan Shuvon photo",
+      "Mayeed Khan Shuvon picture",
+      "Mayeed Khan Shuvon profile photo",
+      "Md Mayeed Khan Shuvon Sylhet",
+    ],
+    priority: 0.6,
+    changefreq: "yearly",
+    pageType: "CollectionPage",
+    requiresContent: true,
+  },
+  {
     key: "faq",
     path: "/faq/",
     title: "FAQ — Md Mayeed Khan Shuvon | Education, Skills, Contact",
@@ -158,6 +181,15 @@ export const ROUTES: RouteMeta[] = [
     pageType: "ContactPage",
   },
 ];
+
+/**
+ * Public route table. Routes flagged `requiresContent` are dropped when their
+ * content is absent, which keeps navigation, the sitemap, llms.txt and the
+ * manifest free of links to pages or images that do not exist.
+ */
+export const ROUTES: RouteMeta[] = ALL_ROUTES.filter(
+  (route) => !route.requiresContent || GALLERY_ENABLED,
+);
 
 export const getRoute = (key: RouteKey): RouteMeta => {
   const found = ROUTES.find((r) => r.key === key);

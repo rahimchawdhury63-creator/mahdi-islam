@@ -7,6 +7,7 @@ import { AboutPage } from "./pages/AboutPage";
 import { EducationPage } from "./pages/EducationPage";
 import { SkillsPage } from "./pages/SkillsPage";
 import { ExperiencePage } from "./pages/ExperiencePage";
+import { GalleryPage } from "./pages/GalleryPage";
 import { FaqPage } from "./pages/FaqPage";
 import { ContactPage } from "./pages/ContactPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -27,6 +28,7 @@ const PAGES: Record<RouteKey, () => JSX.Element> = {
   education: EducationPage,
   skills: SkillsPage,
   experience: ExperiencePage,
+  gallery: GalleryPage,
   faq: FaqPage,
   contact: ContactPage,
 };

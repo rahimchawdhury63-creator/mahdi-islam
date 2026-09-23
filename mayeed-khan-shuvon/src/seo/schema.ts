@@ -26,6 +26,7 @@ import {
   SKILLS,
 } from "../content/profile";
 import { FAQ } from "../content/narrative";
+import { GALLERY, PRIMARY_PHOTO, imageUrl } from "../content/gallery";
 import { absoluteUrl, breadcrumbFor, type RouteMeta } from "./routes";
 
 const ORIGIN = SITE.origin;
@@ -72,14 +73,7 @@ export const personNode = () => {
     jobTitle: PERSON.jobTitle,
     url: `${ORIGIN}/`,
     mainEntityOfPage: { "@id": SITE.profilePageId },
-    image: {
-      "@type": "ImageObject",
-      "@id": CLEAN_ID("portrait"),
-      url: absoluteUrl(PERSON.photo),
-      contentUrl: absoluteUrl(PERSON.photo),
-      caption: PERSON.photoAlt,
-      representativeOfPage: true,
-    },
+    image: primaryImageNode(),
     email: `mailto:${CONTACT.email}`,
     telephone: CONTACT.telephone,
     address: [{ "@id": CLEAN_ID("present-address") }, { "@id": CLEAN_ID("permanent-address") }],
@@ -337,7 +331,8 @@ export const pageNode = (route: RouteMeta) => ({
   inLanguage: "en",
   isPartOf: { "@id": SITE.orgId },
   about: { "@id": SITE.entityId },
-  mainEntity: { "@id": SITE.entityId },
+  mainEntity:
+    route.key === "gallery" ? { "@id": `${ORIGIN}/gallery/#gallery` } : { "@id": SITE.entityId },
   breadcrumb: { "@id": `${absoluteUrl(route.path)}#breadcrumb` },
   primaryImageOfPage: { "@id": CLEAN_ID("portrait") },
   datePublished: SITE.publishedDate,
@@ -385,6 +380,73 @@ export const skillListNode = () => ({
   ),
 });
 
+/**
+ * The primary profile image. Prefers the installed photograph; falls back to
+ * the static plate so the graph is valid whether or not an album exists.
+ */
+export const primaryImageNode = () => {
+  const photo = PRIMARY_PHOTO;
+  const url = imageUrl(photo?.src ?? PERSON.photo, ORIGIN);
+  return {
+    "@type": "ImageObject",
+    "@id": CLEAN_ID("portrait"),
+    url,
+    contentUrl: url,
+    caption: photo?.caption ?? PERSON.photoAlt,
+    description: photo?.alt ?? PERSON.photoAlt,
+    width: photo ? { "@type": "QuantitativeValue", value: photo.fullWidth, unitCode: "E37" } : undefined,
+    height: photo ? { "@type": "QuantitativeValue", value: photo.fullHeight, unitCode: "E37" } : undefined,
+    encodingFormat: "image/jpeg",
+    representativeOfPage: true,
+    creditText: PERSON.fullName,
+    creator: { "@id": SITE.entityId },
+    copyrightNotice: `© 2026 ${PERSON.fullName}`,
+    license: `${ORIGIN}/gallery/`,
+    acquireLicensePage: `${ORIGIN}/gallery/`,
+  };
+};
+
+/** One ImageObject per published photograph. */
+export const galleryImageNodes = () =>
+  GALLERY.map((photo) => {
+    const url = imageUrl(photo.src, ORIGIN);
+    return {
+      "@type": "ImageObject",
+      "@id": `${ORIGIN}/#photo-${photo.id}`,
+      url,
+      contentUrl: url,
+      caption: photo.caption,
+      description: photo.alt,
+      name: `${PERSON.fullName} — ${photo.caption}`,
+      width: { "@type": "QuantitativeValue", value: photo.width, unitCode: "E37" },
+      height: { "@type": "QuantitativeValue", value: photo.height, unitCode: "E37" },
+      encodingFormat: "image/jpeg",
+      about: { "@id": SITE.entityId },
+      creator: { "@id": SITE.entityId },
+      creditText: PERSON.fullName,
+      copyrightNotice: `© 2026 ${PERSON.fullName}`,
+      isPartOf: { "@id": `${ORIGIN}/gallery/#gallery` },
+      ...(photo.location ? { contentLocation: { "@type": "Place", name: photo.location } } : {}),
+      license: `${ORIGIN}/gallery/`,
+      acquireLicensePage: `${ORIGIN}/gallery/`,
+    };
+  });
+
+/** The album itself, referenced by every ImageObject above. */
+export const imageGalleryNode = () => ({
+  "@type": "ImageGallery",
+  "@id": `${ORIGIN}/gallery/#gallery`,
+  name: `Photographs of ${PERSON.fullName}`,
+  description:
+    "Published photographs of Md Mayeed Khan Shuvon, each with a caption and descriptive alt text.",
+  about: { "@id": SITE.entityId },
+  numberOfItems: GALLERY.length,
+  image: GALLERY.map((photo) => ({ "@id": `${ORIGIN}/#photo-${photo.id}` })),
+  associatedMedia: GALLERY.map((photo) => ({ "@id": `${ORIGIN}/#photo-${photo.id}` })),
+  isPartOf: { "@id": `${ORIGIN}/gallery/#webpage` },
+  mainEntityOfPage: { "@id": `${ORIGIN}/gallery/#webpage` },
+});
+
 /* ------------------------------------------------------------------ graph */
 
 export const buildGraph = (route: RouteMeta) => {
@@ -397,9 +459,13 @@ export const buildGraph = (route: RouteMeta) => {
     ...referenceNodes(),
     ...languageNodes(),
     skillListNode(),
+    primaryImageNode(),
+    ...galleryImageNodes(),
     pageNode(route),
     breadcrumbNode(route),
   ];
+
+  if (route.key === "gallery") graph.push(imageGalleryNode());
 
   if (route.key === "faq" || route.key === "home") graph.push(faqNode());
 

@@ -7,6 +7,9 @@ import { ExperienceBlock } from "../components/ExperienceBlock";
 import { LanguageTable, PersonalParticulars, ReferenceCard } from "../components/FactsTables";
 import { FaqBlock } from "../components/FaqBlock";
 import { ContactBlock } from "../components/ContactBlock";
+import { Gallery } from "../components/Gallery";
+import { GALLERY, GALLERY_COUNT, SECONDARY_PHOTOS } from "../content/gallery";
+import { Link } from "../lib/nav";
 import {
   CAREER_OBJECTIVE,
   EDUCATION_INTRO,
@@ -58,9 +61,24 @@ export function HomePage() {
         </div>
       </Section>
 
+
+      {GALLERY_COUNT > 0 && (
+        <Section
+          id="photographs"
+          eyebrow="02 · Photographs"
+          title="Photographs"
+          lead={`${GALLERY_COUNT} published photograph${GALLERY_COUNT === 1 ? "" : "s"}, each with a caption and a written description.`}
+        >
+          <Gallery photos={SECONDARY_PHOTOS.length > 0 ? SECONDARY_PHOTOS : GALLERY} />
+          <p className="section__more">
+            <Link to="/gallery/">See all photographs and how they may be used →</Link>
+          </p>
+        </Section>
+      )}
+
       <Section
         id="objective"
-        eyebrow="02 · Career objective"
+        eyebrow="03 · Career objective"
         title="Career objective"
         lead="The single sentence that organises everything else on this page."
       >
@@ -80,7 +98,7 @@ export function HomePage() {
 
       <Section
         id="education"
-        eyebrow="03 · Education"
+        eyebrow="04 · Education"
         title="Educational qualification"
         lead="SSC at Nabin Chandra Govt. Model High School, HSC at Kulaura Govt. College, and LL.B (Honours) at North East University Bangladesh."
         variant="tinted"
@@ -90,7 +108,7 @@ export function HomePage() {
 
       <Section
         id="skills"
-        eyebrow="04 · Skills"
+        eyebrow="05 · Skills"
         title="Skills and competencies"
         lead="IELTS preparation and academic English as the primary specialisation, supported by legal, communication and digital competencies."
       >
@@ -112,7 +130,7 @@ export function HomePage() {
 
       <Section
         id="experience"
-        eyebrow="05 · Experience"
+        eyebrow="06 · Experience"
         title="Professional experience"
         lead="Four months of continuous IELTS preparation tutoring in Sylhet, presented with its method and its evidence."
         variant="tinted"
@@ -124,7 +142,7 @@ export function HomePage() {
 
       <Section
         id="languages"
-        eyebrow="06 · Languages"
+        eyebrow="07 · Languages"
         title="Languages"
         lead="Bangla, English and Hindi — used as operational tools, not merely listed as attributes."
       >
@@ -134,7 +152,7 @@ export function HomePage() {
 
       <Section
         id="principles"
-        eyebrow="07 · Working principles"
+        eyebrow="08 · Working principles"
         title="Working principles"
         lead="Six commitments that describe how he works, drawn from legal training and applied to language instruction."
         variant="tinted"
@@ -154,7 +172,7 @@ export function HomePage() {
 
       <Section
         id="interests"
-        eyebrow="08 · Professional interests"
+        eyebrow="09 · Professional interests"
         title="Professional interests and direction"
         lead="Where his existing skills are being pointed next."
       >
@@ -170,7 +188,7 @@ export function HomePage() {
 
       <Section
         id="personal"
-        eyebrow="09 · Personal particulars"
+        eyebrow="10 · Personal particulars"
         title="Personal particulars"
         lead="Published openly and accurately so that employers, universities and verification bodies can reconcile them consistently."
         variant="tinted"
@@ -181,7 +199,7 @@ export function HomePage() {
 
       <Section
         id="references"
-        eyebrow="10 · References"
+        eyebrow="11 · References"
         title="Professional reference"
         lead="A named referee who can speak to academic discipline, reliability and language proficiency."
       >
@@ -191,7 +209,7 @@ export function HomePage() {
 
       <Section
         id="faq"
-        eyebrow="11 · Frequently asked questions"
+        eyebrow="12 · Frequently asked questions"
         title="Questions people ask about Md Mayeed Khan Shuvon"
         lead="Short, direct answers — each one written to be quotable on its own."
         variant="tinted"
@@ -201,7 +219,7 @@ export function HomePage() {
 
       <Section
         id="contact"
-        eyebrow="12 · Contact"
+        eyebrow="13 · Contact"
         title="Contact Md Mayeed Khan Shuvon"
         lead="Telephone, WhatsApp and email — with the address, hours and documents available on request."
       >
@@ -210,7 +228,7 @@ export function HomePage() {
 
       <Section
         id="closing"
-        eyebrow="13 · About this profile"
+        eyebrow="14 · About this profile"
         title="Accuracy, structure and the canonical record"
         lead="Why this page exists in this form."
         variant="rule"

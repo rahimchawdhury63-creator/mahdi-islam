@@ -1,7 +1,8 @@
 import { Link } from "../lib/nav";
 import { CONTACT, PERSON } from "../content/profile";
 import { HERO } from "../content/narrative";
-import { OG_IMAGE } from "../seo/head";
+import { PrimaryPortrait } from "./Gallery";
+import { PRIMARY_PHOTO, GALLERY_COUNT } from "../content/gallery";
 
 export function Hero() {
   return (
@@ -44,15 +45,7 @@ export function Hero() {
 
         <figure className="hero__plate">
           <div className="hero__plate-frame">
-            <img
-              src={PERSON.photo}
-              width={OG_IMAGE.width}
-              height={OG_IMAGE.height}
-              alt={PERSON.photoAlt}
-              {...({ fetchpriority: "high" } as Record<string, string>)}
-              decoding="async"
-              className="hero__portrait"
-            />
+            <PrimaryPortrait />
             <span className="hero__plate-corner hero__plate-corner--tl" aria-hidden="true" />
             <span className="hero__plate-corner hero__plate-corner--tr" aria-hidden="true" />
             <span className="hero__plate-corner hero__plate-corner--bl" aria-hidden="true" />
@@ -61,10 +54,17 @@ export function Hero() {
           <figcaption className="hero__plate-caption">
             <span className="hero__plate-label">Fig. 1 — Profile</span>
             <span className="hero__plate-text">
-              {PERSON.fullName} · LL.B (Hons), North East University Bangladesh · IELTS preparation
-              specialist, Sylhet
+              {PRIMARY_PHOTO ? PRIMARY_PHOTO.caption : "Profile portrait"} · {PERSON.fullName} · LL.B
+              (Hons), North East University Bangladesh · IELTS preparation specialist, Sylhet
             </span>
           </figcaption>
+          {GALLERY_COUNT > 1 && (
+            <p className="hero__plate-more">
+              <Link to="/gallery/">
+                View all {GALLERY_COUNT} photographs →
+              </Link>
+            </p>
+          )}
         </figure>
       </div>
     </section>

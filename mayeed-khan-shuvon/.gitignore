@@ -8,8 +8,21 @@ node_modules/
 
 # Generated artwork working files (the committed results live in public/)
 .fonts/
+
+# Source photographs are personal files: they are never committed, only the
+# derivatives generated from them (which git also ignores — see public/images).
 assets/source/*
 !assets/source/.gitkeep
+!assets/source/README.md
+!assets/source/gallery
+assets/source/gallery/*
+!assets/source/gallery/README.md
+!assets/source/gallery/.gitkeep
+
+# Generated gallery derivatives (rebuilt by `npm run photos`)
+public/images/
+# Generated manifest consumed by src/content/gallery.ts
+src/content/gallery.generated.json
 
 # Editor / OS
 .DS_Store

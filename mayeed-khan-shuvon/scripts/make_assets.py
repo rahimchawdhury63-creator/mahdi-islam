@@ -31,12 +31,12 @@ the same Fraunces optical-size axis the website uses.
 
 from __future__ import annotations
 
-import os
+import json
+import re
 import sys
-from dataclasses import dataclass
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 FONTS = ROOT / "scripts" / "fonts"
@@ -258,26 +258,196 @@ def portrait_plate(width: int = 1200, height: int = 1500) -> Image.Image:
     return plate
 
 
-def build_portrait() -> Image.Image:
-    """Returns the 1200x1500 portrait plate, using the real photo when present."""
+# ----------------------------------------------------------- photo library
+GALLERY_DIR = SOURCE / "gallery"
+GALLERY_CONFIG = ROOT / "src" / "content" / "gallery.config.json"
+GALLERY_OUT = PUBLIC / "images" / "gallery"
+GENERATED_JSON = ROOT / "src" / "content" / "gallery.generated.json"
+
+# Publication widths (long edge). 900 is the grid/hero size, 1600 the full view.
+GALLERY_WIDTHS = (900, 1600)
+IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".tif", ".tiff"}
+
+
+def gallery_sources() -> list[Path]:
+    """Every photographic source file, in a stable order."""
+    if not GALLERY_DIR.exists():
+        return []
+    return sorted(
+        p for p in GALLERY_DIR.iterdir() if p.is_file() and p.suffix.lower() in IMAGE_SUFFIXES
+    )
+
+
+def slugify(name: str) -> str:
+    """'04-stream.jpg' -> '04-stream'; keeps the leading index for stable order."""
+    return re.sub(r"[^a-z0-9]+", "-", name.rsplit(".", 1)[0].lower()).strip("-") or "photo"
+
+
+def fit_within(image: Image.Image, width: int) -> Image.Image:
+    """Scales so the LONG edge equals `width`, never upscaling."""
+    long_edge = max(image.width, image.height)
+    if long_edge <= width:
+        return image
+    scale = width / long_edge
+    return image.resize(
+        (max(1, round(image.width * scale)), max(1, round(image.height * scale))), Image.LANCZOS
+    )
+
+
+def assign_ids(sources: list[Path], auto: bool) -> list[tuple[Path, str]]:
+    """
+    Maps each source file to an editorial id.
+
+    A file whose name already matches an id ("04-stream.jpg") is used as-is.
+    Anything else is either assigned the next unused id from gallery.config.json
+    in sorted filename order (--auto), or skipped with an explanation.
+    """
+    known = list(gallery_config().get("order") or [])
+    pairs: list[tuple[Path, str]] = []
+    unmapped: list[Path] = []
+
+    for source in sources:
+        slug = slugify(source.name)
+        if slug in known:
+            pairs.append((source, slug))
+        else:
+            unmapped.append(source)
+
+    used = {photo_id for _, photo_id in pairs}
+    if unmapped and auto:
+        free = [photo_id for photo_id in known if photo_id not in used]
+        for source, photo_id in zip(unmapped, free):
+            pairs.append((source, photo_id))
+            print(f"auto-mapped       {source.name}  ->  {photo_id}")
+        leftovers = unmapped[len(free):]
+        if leftovers:
+            print(
+                f"skipped           {', '.join(p.name for p in leftovers)} "
+                f"(no free id left in gallery.config.json)"
+            )
+    elif unmapped:
+        print(
+            "skipped           "
+            + ", ".join(p.name for p in unmapped)
+            + "\n                  rename to an id listed in src/content/gallery.config.json"
+            + "\n                  or re-run as: npm run photos -- --auto"
+        )
+
+    order = {photo_id: index for index, photo_id in enumerate(known)}
+    pairs.sort(key=lambda pair: order.get(pair[1], len(known)))
+    return pairs
+
+
+def build_gallery(auto_ids: bool = False) -> list[dict]:
+    """
+    Generates web derivatives for every photograph and returns the manifest that
+    `src/content/gallery.ts` consumes. Also chooses the primary portrait.
+    """
+    sources = gallery_sources()
+    if not sources:
+        GENERATED_JSON.write_text("[]\n", encoding="utf-8")
+        print("gallery           <- no photographs installed (see assets/source/gallery/README.md)")
+        return []
+
+    GALLERY_OUT.mkdir(parents=True, exist_ok=True)
+    manifest: list[dict] = []
+
+    for source, photo_id in assign_ids(sources, auto_ids):
+        original = Image.open(source)
+        original = ImageOps.exif_transpose(original).convert("RGB")
+
+        entry: dict = {"id": photo_id, "source": source.name}
+        for width in GALLERY_WIDTHS:
+            derivative = fit_within(original, width)
+            jpg = GALLERY_OUT / f"{photo_id}-{width}.jpg"
+            webp = GALLERY_OUT / f"{photo_id}-{width}.webp"
+
+            derivative.save(jpg, quality=84, optimize=True, progressive=True)
+            derivative.save(webp, quality=78, method=6)
+
+            rel = f"/images/gallery/{photo_id}-{width}"
+            if width == GALLERY_WIDTHS[0]:
+                entry.update(
+                    {
+                        "src": f"{rel}.jpg",
+                        "webp": f"{rel}.webp",
+                        "width": derivative.width,
+                        "height": derivative.height,
+                    }
+                )
+            entry.setdefault("srcsetParts", []).append(f"{rel}.jpg {width}w")
+            entry.setdefault("webpParts", []).append(f"{rel}.webp {width}w")
+        entry.update(
+            {
+                "fullWidth": fit_within(original, GALLERY_WIDTHS[-1]).width,
+                "fullHeight": fit_within(original, GALLERY_WIDTHS[-1]).height,
+                "bytes": (GALLERY_OUT / f"{photo_id}-{GALLERY_WIDTHS[-1]}.jpg").stat().st_size,
+            }
+        )
+        entry["srcset"] = ", ".join(entry.pop("srcsetParts"))
+        entry["webpSrcset"] = ", ".join(entry.pop("webpParts"))
+        manifest.append(entry)
+
+    GENERATED_JSON.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    print(f"gallery           <- {len(manifest)} photograph(s) -> public/images/gallery/")
+    for entry in manifest:
+        print(
+            f"   {entry['id']:22} <- {entry['source']:26} "
+            f"{entry['width']}x{entry['height']} (+1600px) {entry['bytes'] // 1024} KB"
+        )
+    return manifest
+
+
+def gallery_config() -> dict:
+    """Shared with src/content/gallery.ts so the hero, the graph and the album agree."""
+    try:
+        return json.loads(GALLERY_CONFIG.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def primary_source(manifest: list[dict]) -> Path | None:
+    """
+    Resolution order for the hero/social portrait:
+      1. assets/source/portrait.*  — an explicit override always wins
+      2. the id named by `primary` in gallery.config.json
+      3. the first photograph in the ordered manifest
+    """
     if SOURCE.exists():
         for candidate in sorted(SOURCE.iterdir()):
-            if candidate.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp", ".avif", ".tif", ".tiff"}:
-                photo = Image.open(candidate).convert("RGB")
-                target_ratio = 1200 / 1500
-                ratio = photo.width / photo.height
-                if ratio > target_ratio:  # too wide -> crop sides
-                    new_width = int(photo.height * target_ratio)
-                    left = (photo.width - new_width) // 2
-                    photo = photo.crop((left, 0, left + new_width, photo.height))
-                else:  # too tall -> keep the top (head and shoulders)
-                    new_height = int(photo.width / target_ratio)
-                    photo = photo.crop((0, 0, photo.width, new_height))
-                photo = photo.resize((1200, 1500), Image.LANCZOS)
-                print(f"portrait.jpg      <- {candidate.relative_to(ROOT)}")
-                return photo.convert("RGBA")
+            if candidate.is_file() and candidate.suffix.lower() in IMAGE_SUFFIXES:
+                return candidate
 
-    print("portrait.jpg      <- placeholder plate (drop a photo at assets/source/portrait.jpg)")
+    primary_id = gallery_config().get("primary")
+    for entry in manifest:
+        if entry["id"] == primary_id:
+            return GALLERY_DIR / entry["source"]
+    if manifest:
+        return GALLERY_DIR / manifest[0]["source"]
+    return None
+
+
+def build_portrait(manifest: list[dict] | None = None) -> Image.Image:
+    """Returns the 1200x1500 portrait plate, using the real photo when present."""
+    manifest = manifest or []
+    source = primary_source(manifest)
+
+    if source is not None and source.exists():
+        photo = ImageOps.exif_transpose(Image.open(source)).convert("RGB")
+        target_ratio = 1200 / 1500  # 4:5
+        ratio = photo.width / photo.height
+        if ratio > target_ratio:  # too wide -> crop the sides evenly
+            new_width = int(photo.height * target_ratio)
+            left = (photo.width - new_width) // 2
+            photo = photo.crop((left, 0, left + new_width, photo.height))
+        else:  # too tall -> keep the top (head and shoulders)
+            new_height = int(photo.width / target_ratio)
+            photo = photo.crop((0, 0, photo.width, new_height))
+        photo = photo.resize((1200, 1500), Image.LANCZOS)
+        print(f"portrait.jpg      <- {source.relative_to(ROOT)}")
+        return photo
+
+    print("portrait.jpg      <- placeholder plate (install a photograph — see README)")
     return portrait_plate()
 
 
@@ -409,9 +579,11 @@ def save_icons(mark: Image.Image) -> None:
 
 
 def main() -> int:
+    auto_ids = "--auto" in sys.argv[1:]
     PUBLIC.mkdir(parents=True, exist_ok=True)
 
-    portrait = build_portrait()
+    manifest = build_gallery(auto_ids)
+    portrait = build_portrait(manifest)
     portrait.convert("RGB").save(PUBLIC / "portrait.jpg", quality=88, optimize=True, progressive=True)
 
     card = build_social_card(portrait)
@@ -421,7 +593,16 @@ def main() -> int:
 
     save_icons(build_monogram(512))
 
-    print("\nDone. Re-run with a photograph at assets/source/portrait.jpg to swap the placeholder.")
+    if manifest:
+        print(
+            "\nDone. Portrait and gallery rebuilt from source photographs. "
+            "Run `npm run build` to publish them."
+        )
+    else:
+        print(
+            "\nDone. No photographs installed yet — the site keeps its placeholder plate and\n"
+            "hides the gallery until you add files to assets/source/gallery/."
+        )
     return 0
 
 

@@ -2,7 +2,7 @@
   "name": "mayeed-khan-shuvon-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Enterprise-grade, pre-rendered React + Vite + TypeScript portfolio for Md Mayeed Khan Shuvon (mks.bsdc.info.bd) — 100% SEO, GEO/AEO and Knowledge Graph optimised.",
+  "description": "Enterprise-grade, pre-rendered React + Vite + TypeScript portfolio for Md Mayeed Khan Shuvon (mks.bsdc.info.bd) \u2014 100% SEO, GEO/AEO and Knowledge Graph optimised.",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -14,10 +14,11 @@
     "build:ssr": "vite build --mode ssr",
     "prerender": "node scripts/prerender.mjs",
     "assets": "python3 scripts/make_assets.py",
-    "verify": "npm run typecheck && npm run build",
+    "photos": "python3 scripts/make_assets.py",
     "preview": "vite preview",
     "serve:ssg": "node scripts/serve-static.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run typecheck && npm run build"
   },
   "dependencies": {
     "react": "^18.3.1",

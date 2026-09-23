@@ -17,7 +17,9 @@ Zindabazar, Sylhet, Bangladesh.
 | Path | Purpose |
 | --- | --- |
 | `src/content/profile.ts` | Single source of truth for every verifiable fact (name, contact, education, skills, experience, languages, references) |
-| `src/content/narrative.ts` | Long-form editorial copy — the 2,000+ words of substantive profile text, worked principles and the 16-question FAQ |
+| `src/content/narrative.ts` | Long-form editorial copy — the 2,000+ words of substantive profile text, working principles and the 16-question FAQ |
+| `src/content/gallery.ts` + `gallery.config.json` | Photograph alt text, captions, album order and the primary-image switch |
+| `src/components/Gallery.tsx` | Responsive `<picture>` album and the hero portrait |
 | `src/seo/routes.ts` | The seven routes with their titles, descriptions, keywords, priorities |
 | `src/seo/schema.ts` | Knowledge Graph builder (schema.org `@graph` with stable `@id`s) |
 | `src/seo/head.ts` | Complete per-route `<head>`: title, description, canonical, robots, Open Graph, Twitter card, JSON-LD |
@@ -48,24 +50,55 @@ npm run verify       # typecheck + full build
 `npm run build` fails loudly if any route ends up without exactly one `<h1>`, a canonical URL,
 a JSON-LD graph or at least 400 words of indexable text.
 
-## 3. Adding the photograph
+## 3. Photographs
 
-The site ships with a neutral placeholder plate because a photograph of the subject was not available
-at build time — a fabricated likeness of a real person would be both dishonest and harmful to the
-entity signals this site is built to establish.
+The site ships with a neutral **placeholder plate** because the subject's photographs were not
+available in the build environment. No synthetic or AI-generated likeness of a real person is ever
+produced, and photographs are never published with an invented location or date.
 
-To use the real photograph:
+### Installing the photographs
+
+Put the files in `assets/source/gallery/` and run two commands:
 
 ```bash
-cp /path/to/photo.jpg assets/source/portrait.jpg
-npm run assets     # crops to 4:5, writes public/portrait.jpg and rebuilds the OG card
-npm run build
+npm run photos     # generate web derivatives + rebuild the portrait and social card
+npm run build      # publish
 ```
 
-The photograph then appears in the hero, the Open Graph card, and the schema.org `Person.image`
-node — consistently, from one source.
+`npm run photos` accepts either named or unnamed files:
 
-Regenerating artwork needs Python packages (only for `npm run assets`; the committed files in
+| Approach | What to do | Result |
+| --- | --- | --- |
+| **Named** (preferred) | Save the files as `04-stream.jpg`, `02-riverside.jpg`, `01-park-bench.jpg`, `03-stone-wall.jpg` | Each id carries its own alt text, caption and structured data |
+| **`--auto`** | Keep whatever the camera or WhatsApp produced, then run `npm run photos -- --auto` | Ids are assigned in sorted filename order; the mapping is printed so you can check it |
+| **Portrait override** | Save the preferred hero image as `assets/source/portrait.jpg` | It always wins, whatever the album contains |
+
+The albums ids, their order and the primary image live in **`src/content/gallery.config.json`**,
+which both the build script and the site read — so the hero photograph, the social card, the album
+order and the `Person.image` node can never disagree.
+
+### What the pipeline produces
+
+For each photograph, in `public/images/gallery/`:
+
+- `<id>-900.jpg` and `<id>-1600.jpg` — progressive JPEG at the two published widths
+- `<id>-900.webp` and `<id>-1600.webp` — WebP for browsers that take it
+- `src/content/gallery.generated.json` — the manifest that drives the gallery, including intrinsic
+  dimensions so nothing shifts during load
+
+Plus, from the primary photograph: `public/portrait.jpg` (4:5 crop, head-and-shoulders) and a rebuilt
+`public/og-image.jpg` (1200×630 social card).
+
+EXIF orientation is honoured, originals are never modified, and nothing is upscaled past its source
+resolution.
+
+### While no photographs are installed
+
+`GALLERY_ENABLED` is false, so the `/gallery/` route, its navigation entry, its sitemap row, its
+`ImageGallery` node and the home-page album section are all **omitted automatically**. The build
+cannot link to an image it cannot serve. Installing photographs brings all of it back in one step.
+
+Regenerating artwork needs Python packages (only for `npm run photos`; the committed files in
 `public/` are what the site build consumes):
 
 ```bash
@@ -110,7 +143,8 @@ machine-readable text/JSON files, fonts, and images.
   (verified in the build: 1,057–6,006 words of indexable text per page).
 - Canonical URL on every page; `robots.txt` allows all crawlers, including answer engines, and
   points to `sitemap.xml`.
-- `sitemap.xml` includes `<lastmod>`, `<changefreq>`, `<priority>` and image sitemap entries.
+- `sitemap.xml` includes `<lastmod>`, `<changefreq>`, `<priority>` and, when photographs are
+  installed, a full image sitemap entry (loc, title, caption) for every published photograph.
 - `404.html` is marked `noindex, follow`.
 - Clean, trailing-slash, lower-case URLs that match both `/about/` and `/about` server-side.
 
@@ -150,6 +184,8 @@ URLs. The graph contains:
 - A named referee `Person` plus their `Organization`, and postal addresses as `PostalAddress`/`Place`.
 - `FAQPage` with all 16 question/answer pairs.
 - `ItemList` of every published skill.
+- One `ImageObject` per photograph plus an `ImageGallery` album node when photographs are installed,
+  each with caption, description, dimensions, credit and licence.
 
 `PERSON_PROFILES.sameAs` in `src/seo/schema.ts` is deliberately empty — add **only genuine**
 profile URLs (LinkedIn, Google Scholar, etc.) there when they exist. Fabricated `sameAs` links
@@ -175,6 +211,9 @@ Content decisions that make the site quotable by assistants:
   returns the same values.
 - `robots.txt` explicitly allows GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended
   and other answer-engine crawlers.
+- The published photographs are listed in `llms.txt` and `ai-profile.json` with their captions,
+  descriptions and image URLs, so an assistant can describe the profile image correctly rather than
+  guessing at it.
 
 ## 8. Google Knowledge Graph and rich results — post-launch checklist
 

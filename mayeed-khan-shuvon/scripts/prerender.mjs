@@ -27,6 +27,7 @@ const load = async (file) => import(pathToFileURL(join(ssrDir, file)).href);
 
 const { render } = await load("entry-server.js");
 const { getGeneratedFiles, buildHead, ROUTES } = await load("entry-data.js");
+const { GALLERY } = await load("entry-data.js");
 
 /* ------------------------------------------------------------------ head */
 function headMarkup(head) {
@@ -166,6 +167,24 @@ if (!homeHtml.includes("FAQPage")) problems.push("home: FAQPage node missing fro
 const assetWarnings = [];
 for (const asset of ["portrait.jpg", "og-image.jpg", "favicon.ico", "apple-touch-icon.png"]) {
   if (!existsSync(join(dist, asset))) assetWarnings.push(asset);
+}
+
+/*
+ * Gallery integrity: every derivative referenced by the manifest must exist in
+ * dist/. A page that advertises an image it cannot serve is worse than no page,
+ * so this is a hard failure rather than a warning.
+ */
+for (const photo of GALLERY ?? []) {
+  for (const file of [photo.src, photo.webp, `/images/gallery/${photo.id}-1600.jpg`]) {
+    if (!file) continue;
+    if (!existsSync(join(dist, file.replace(/^\//, "")))) {
+      problems.push(`gallery: manifest references ${file}, which is missing from dist/`);
+    }
+  }
+}
+
+if ((GALLERY ?? []).length) {
+  console.log(`\n  Gallery: ${GALLERY.length} photograph(s) verified in dist/images/gallery/`);
 }
 
 const sizeOf = async (file) => {

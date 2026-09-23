@@ -644,6 +644,66 @@ a.contact__card:hover { transform: translateY(-2px); box-shadow: var(--shadow); 
 .link-card__desc { font-size: 0.85rem; color: var(--muted); }
 .link-cards--compact { margin-top: 1.8rem; }
 
+/* ------------------------------------------------------------- gallery */
+.gallery {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1rem, 2.4vw, 1.5rem);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.gallery__figure {
+  margin: 0;
+  height: 100%;
+  background: #fff;
+  border: 1px solid var(--line-cool);
+  border-radius: var(--radius);
+  padding: 10px 10px 0;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+.gallery__figure:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+/* Photographs are shown in their own aspect ratio: cropping a personal
+   photograph to a fixed grid would cut heads off. */
+.gallery__img {
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius) - 6px);
+  background: var(--paper-tint);
+}
+
+.gallery__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  justify-content: space-between;
+  padding: 0.7rem 0.2rem 0.8rem;
+}
+.gallery__caption-text { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+.gallery__caption-place {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hero__plate-more { margin: 0.6rem 0 0; font-size: 0.88rem; font-weight: 600; }
+
+/* The hero plate now holds a photograph with its own aspect ratio. */
+.hero__plate-frame picture { display: block; }
+.hero__portrait { object-position: center 12%; }
+
+@media (max-width: 520px) {
+  .gallery { grid-template-columns: 1fr; }
+}
+
 /* ------------------------------------------------------------ tag cloud */
 .tag-cloud { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .tag-cloud__item {

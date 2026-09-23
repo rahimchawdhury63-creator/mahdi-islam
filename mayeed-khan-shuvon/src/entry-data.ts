@@ -38,6 +38,7 @@ import {
   SKILLS_INTRO,
   WORKING_PRINCIPLES,
 } from "./content/narrative";
+import { GALLERY, PRIMARY_PHOTO } from "./content/gallery";
 import { absoluteUrl, ROUTES } from "./seo/routes";
 import { buildGraph } from "./seo/schema";
 
@@ -55,6 +56,12 @@ function sitemapXml(): string {
       `    <lastmod>${today}</lastmod>`,
       `    <changefreq>${route.changefreq}</changefreq>`,
       `    <priority>${route.priority.toFixed(1)}</priority>`,
+      ...(route.key === "gallery" && GALLERY.length
+        ? GALLERY.map(
+            (photo) =>
+              `    <image:image>\n      <image:loc>${SITE.origin}${photo.src}</image:loc>\n      <image:title>${PERSON.fullName} — ${photo.caption}</image:title>\n      <image:caption>${photo.alt}</image:caption>\n    </image:image>`,
+          )
+        : []),
       ...(route.key === "home"
         ? [
             `    <image:image>`,
@@ -185,6 +192,15 @@ ${EXPERIENCE.map(
 ## Languages
 
 ${LANGUAGES.map((l) => `- **${l.name}** — ${l.level}. ${l.detail}`).join("\n")}
+
+## Photographs
+
+${GALLERY.length
+  ? GALLERY.map(
+      (photo) =>
+        `- **${photo.caption}** (${photo.location || "location not published"}): ${photo.alt} — [image](${SITE.origin}${photo.src})${photo.id === PRIMARY_PHOTO?.id ? " · **primary profile image**" : ""}`,
+    ).join("\n")
+  : "- No photographs are published yet. A neutral placeholder plate is used for the profile image."}
 
 ## Frequently asked questions
 
@@ -364,6 +380,14 @@ function aiProfileJson(): string {
         relationship: r.relationship,
       })),
       careerObjective: CAREER_OBJECTIVE.statement,
+      photographs: GALLERY.map((photo) => ({
+        id: photo.id,
+        url: `${SITE.origin}${photo.src}`,
+        caption: photo.caption,
+        alt: photo.alt,
+        location: photo.location || null,
+        primary: photo.id === PRIMARY_PHOTO?.id,
+      })),
       faq: FAQ,
     },
     knowledgeGraph: buildGraph(ROUTES[0]),
