@@ -26,8 +26,14 @@ Tips:
 - The **primary portrait** is what appears in the hero, the social card and the
   schema.org `Person.image`. Override it at any time by dropping the preferred
   image at `assets/source/portrait.jpg` — that always takes priority.
-- If you would rather not rename anything, run `npm run photos -- --auto` and the
-  script will assign ids in sorted filename order, printing the mapping it used.
-  Check the printed mapping: a wrong assignment puts the wrong caption on a
-  photograph.
+- **Not renaming anything?** Then either use `autoMap` (recommended) or `--auto`:
+
+  - `autoMap` in `src/content/gallery.config.json` is an exact
+    filename → id table. It is **already filled in** for the four WhatsApp
+    files (`IMG-20260923-WA0000.jpg` → `04-stream`, and so on), so uploading them
+    under their original names works with no renaming at all. Add an entry for
+    any new filename.
+  - `npm run photos -- --auto` is the positional fallback: ids are assigned in
+    sorted filename order and the mapping is printed. Check that printout — a
+    positional assignment can put the wrong caption on a photograph.
 - Originals are never modified; everything generated lands in `public/images/`.

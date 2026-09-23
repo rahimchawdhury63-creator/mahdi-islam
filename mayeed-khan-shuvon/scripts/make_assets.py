@@ -296,24 +296,52 @@ def fit_within(image: Image.Image, width: int) -> Image.Image:
 
 def assign_ids(sources: list[Path], auto: bool) -> list[tuple[Path, str]]:
     """
-    Maps each source file to an editorial id.
+    Maps each source file to an editorial id, in three passes:
 
-    A file whose name already matches an id ("04-stream.jpg") is used as-is.
-    Anything else is either assigned the next unused id from gallery.config.json
-    in sorted filename order (--auto), or skipped with an explanation.
+      1. `autoMap` in gallery.config.json — an exact filename -> id table. This is
+         what makes camera, phone and WhatsApp names ("IMG-20260923-WA0000.jpg")
+         work without renaming anything, and it is deterministic rather than
+         positional, so a renamed or re-downloaded file cannot silently swap two
+         photographs' captions.
+      2. A file already named after its id ("04-stream.jpg") is used as-is.
+      3. With `--auto`, anything still unmapped takes the next unused id in
+         `order`, in sorted filename order.
+
+    Anything left over is reported and skipped rather than guessed at: a
+    photograph published with the wrong caption is worse than one not published.
     """
-    known = list(gallery_config().get("order") or [])
+    config = gallery_config()
+    known = list(config.get("order") or [])
+    auto_map = {name.lower(): photo_id for name, photo_id in (config.get("autoMap") or {}).items()}
+
     pairs: list[tuple[Path, str]] = []
     unmapped: list[Path] = []
+    used: dict[str, str] = {}  # id -> source filename, to catch conflicts
 
     for source in sources:
-        slug = slugify(source.name)
-        if slug in known:
-            pairs.append((source, slug))
-        else:
-            unmapped.append(source)
+        photo_id = auto_map.get(source.name.lower())
+        if photo_id is None and slugify(source.name) in known:
+            photo_id = slugify(source.name)
 
-    used = {photo_id for _, photo_id in pairs}
+        if photo_id is None:
+            unmapped.append(source)
+            continue
+        if photo_id not in known:
+            print(
+                f"skipped           {source.name} -> '{photo_id}' is not listed in "
+                f"gallery.config.json order"
+            )
+            continue
+        if photo_id in used:
+            print(
+                f"skipped           {source.name} -> '{photo_id}' is already taken by "
+                f"{used[photo_id]}"
+            )
+            continue
+
+        used[photo_id] = source.name
+        pairs.append((source, photo_id))
+
     if unmapped and auto:
         free = [photo_id for photo_id in known if photo_id not in used]
         for source, photo_id in zip(unmapped, free):
@@ -329,7 +357,8 @@ def assign_ids(sources: list[Path], auto: bool) -> list[tuple[Path, str]]:
         print(
             "skipped           "
             + ", ".join(p.name for p in unmapped)
-            + "\n                  rename to an id listed in src/content/gallery.config.json"
+            + "\n                  add the filename to autoMap in src/content/gallery.config.json,"
+            + "\n                  rename it to one of the ids in `order`,"
             + "\n                  or re-run as: npm run photos -- --auto"
         )
 

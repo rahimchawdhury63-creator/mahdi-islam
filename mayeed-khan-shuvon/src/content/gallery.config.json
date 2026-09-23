@@ -1,4 +1,10 @@
 {
   "primary": "04-stream",
-  "order": ["04-stream", "02-riverside", "01-park-bench", "03-stone-wall"]
+  "order": ["04-stream", "02-riverside", "01-park-bench", "03-stone-wall"],
+  "autoMap": {
+    "IMG-20260923-WA0000.jpg": "04-stream",
+    "IMG-20260923-WA0001.jpg": "03-stone-wall",
+    "IMG-20260923-WA0002.jpg": "01-park-bench",
+    "IMG-20260923-WA0003.jpg": "02-riverside"
+  }
 }
