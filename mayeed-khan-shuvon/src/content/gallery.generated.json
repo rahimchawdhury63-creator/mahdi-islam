@@ -1,0 +1,54 @@
+[
+  {
+    "id": "04-stream",
+    "source": "IMG-20260923-WA0000.jpg",
+    "src": "/images/gallery/04-stream-900.jpg",
+    "webp": "/images/gallery/04-stream-900.webp",
+    "width": 600,
+    "height": 900,
+    "fullWidth": 1066,
+    "fullHeight": 1600,
+    "bytes": 295790,
+    "srcset": "/images/gallery/04-stream-900.jpg 900w, /images/gallery/04-stream-1600.jpg 1600w",
+    "webpSrcset": "/images/gallery/04-stream-900.webp 900w, /images/gallery/04-stream-1600.webp 1600w"
+  },
+  {
+    "id": "02-riverside",
+    "source": "IMG-20260923-WA0003.jpg",
+    "src": "/images/gallery/02-riverside-900.jpg",
+    "webp": "/images/gallery/02-riverside-900.webp",
+    "width": 506,
+    "height": 900,
+    "fullWidth": 899,
+    "fullHeight": 1600,
+    "bytes": 136728,
+    "srcset": "/images/gallery/02-riverside-900.jpg 900w, /images/gallery/02-riverside-1600.jpg 1600w",
+    "webpSrcset": "/images/gallery/02-riverside-900.webp 900w, /images/gallery/02-riverside-1600.webp 1600w"
+  },
+  {
+    "id": "01-park-bench",
+    "source": "IMG-20260923-WA0002.jpg",
+    "src": "/images/gallery/01-park-bench-900.jpg",
+    "webp": "/images/gallery/01-park-bench-900.webp",
+    "width": 675,
+    "height": 900,
+    "fullWidth": 960,
+    "fullHeight": 1280,
+    "bytes": 349098,
+    "srcset": "/images/gallery/01-park-bench-900.jpg 900w, /images/gallery/01-park-bench-1600.jpg 1600w",
+    "webpSrcset": "/images/gallery/01-park-bench-900.webp 900w, /images/gallery/01-park-bench-1600.webp 1600w"
+  },
+  {
+    "id": "03-stone-wall",
+    "source": "IMG-20260923-WA0001.jpg",
+    "src": "/images/gallery/03-stone-wall-900.jpg",
+    "webp": "/images/gallery/03-stone-wall-900.webp",
+    "width": 675,
+    "height": 900,
+    "fullWidth": 768,
+    "fullHeight": 1024,
+    "bytes": 244995,
+    "srcset": "/images/gallery/03-stone-wall-900.jpg 900w, /images/gallery/03-stone-wall-1600.jpg 1600w",
+    "webpSrcset": "/images/gallery/03-stone-wall-900.webp 900w, /images/gallery/03-stone-wall-1600.webp 1600w"
+  }
+]
