@@ -1,0 +1,20 @@
+# Cloudflare Pages configuration for mks.bsdc.info.bd
+#
+# Dashboard route:  Workers & Pages → Create → Pages → Connect to Git
+#   Framework preset:        None (or Vite)
+#   Build command:           npm run build
+#   Build output directory:  dist
+#   Root directory:          mayeed-khan-shuvon   (if deploying from this folder)
+#   Node version:            20 (set env var NODE_VERSION=20 if the default differs)
+#
+# CLI route:  npx wrangler pages deploy dist --project-name mks-bsdc-info-bd
+
+name = "mks-bsdc-info-bd"
+compatibility_date = "2026-01-01"
+pages_build_output_dir = "dist"
+
+# The site is fully static: no Functions, no KV, no D1, no Pages middleware.
+# Build-time only — nothing here runs at request time.
+[build]
+command = "npm run build"
+cwd = "."

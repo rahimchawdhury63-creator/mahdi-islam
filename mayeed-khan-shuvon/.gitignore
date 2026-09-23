@@ -1,0 +1,35 @@
+# Build output
+dist/
+dist-server/
+.wrangler/
+
+# Dependencies
+node_modules/
+
+# Generated artwork working files (the committed results live in public/)
+.fonts/
+assets/source/*
+!assets/source/.gitkeep
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Tooling caches
+.vite/
+.cache/
+__pycache__/
+*.pyc
