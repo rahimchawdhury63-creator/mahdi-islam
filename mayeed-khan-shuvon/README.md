@@ -147,6 +147,18 @@ python3 -m pip install --break-system-packages Pillow numpy fonttools brotli fre
 4. **Custom domains → Set up a domain → `mks.bsdc.info.bd`.** Cloudflare adds the DNS record and
    issues the certificate automatically when the zone is on Cloudflare.
 
+> **Do not put `[build]` in `wrangler.toml`.** Cloudflare Pages takes the build command and output
+> directory from the *dashboard*, not from the config file, and a `[build]` section there aborts the
+> deploy before anything runs:
+>
+> ```
+> ERROR  Running configuration file validation for Pages:
+>        - Configuration file for Pages projects does not support "build"
+> ```
+>
+> The `wrangler.toml` in this project declares only `name`, `compatibility_date` and
+> `pages_build_output_dir`. If a deploy fails at the configuration step, check that file first.
+
 ### CLI
 
 ```bash

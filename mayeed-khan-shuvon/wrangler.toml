@@ -1,20 +1,31 @@
 # Cloudflare Pages configuration for mks.bsdc.info.bd
 #
+# ─── Read this before editing ────────────────────────────────────────────────
+# Cloudflare Pages reads the *build command* and *output directory* from the
+# project dashboard, NOT from this file. A `[build]` section here is a hard
+# validation error that aborts the deploy before anything is built:
+#
+#   ERROR  Running configuration file validation for Pages:
+#          - Configuration file for Pages projects does not support "build"
+#
+# This file only declares the runtime surface, which is intentionally empty:
+# the site is fully static — no Functions, no KV, no D1, no middleware.
+# ─────────────────────────────────────────────────────────────────────────────
+#
 # Dashboard route:  Workers & Pages → Create → Pages → Connect to Git
 #   Framework preset:        None (or Vite)
 #   Build command:           npm run build
 #   Build output directory:  dist
-#   Root directory:          mayeed-khan-shuvon   (if deploying from this folder)
-#   Node version:            20 (set env var NODE_VERSION=20 if the default differs)
+#   Root directory:          mayeed-khan-shuvon
+#   Node version:            20   (set env var NODE_VERSION=20 if the default differs)
+#
+# `npm run build` = vite build (client) + vite build --mode ssr + prerender.
+# It is deliberately free of any image toolchain: the derivatives in
+# public/images/gallery/ and the manifest src/content/gallery.generated.json
+# are committed, so Cloudflare's build environment never needs Pillow.
 #
 # CLI route:  npx wrangler pages deploy dist --project-name mks-bsdc-info-bd
 
 name = "mks-bsdc-info-bd"
 compatibility_date = "2026-01-01"
 pages_build_output_dir = "dist"
-
-# The site is fully static: no Functions, no KV, no D1, no Pages middleware.
-# Build-time only — nothing here runs at request time.
-[build]
-command = "npm run build"
-cwd = "."
