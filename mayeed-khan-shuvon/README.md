@@ -52,9 +52,17 @@ a JSON-LD graph or at least 400 words of indexable text.
 
 ## 3. Photographs
 
-The site ships with a neutral **placeholder plate** because the subject's photographs were not
-available in the build environment. No synthetic or AI-generated likeness of a real person is ever
-produced, and photographs are never published with an invented location or date.
+**Installed.** Four photographs of the subject are published, with a further neutral placeholder
+plate kept as a fallback for the case where the gallery is removed. No synthetic or AI-generated
+likeness of a real person is ever produced, and no photograph is published with an invented location
+or date.
+
+| Id | Caption | Role |
+| --- | --- | --- |
+| `04-stream` | Outdoors in a wooded valley | **Primary** — hero, social card, `Person.image` |
+| `02-riverside` | On the riverbank | Album |
+| `01-park-bench` | In a public park | Album |
+| `03-stone-wall` | Against a stone wall | Album |
 
 ### Installing the photographs
 
@@ -65,13 +73,17 @@ npm run photos     # generate web derivatives + rebuild the portrait and social 
 npm run build      # publish
 ```
 
-`npm run photos` accepts either named or unnamed files:
+`npm run photos` resolves each file to an id in three passes:
 
-| Approach | What to do | Result |
-| --- | --- | --- |
-| **Named** (preferred) | Save the files as `04-stream.jpg`, `02-riverside.jpg`, `01-park-bench.jpg`, `03-stone-wall.jpg` | Each id carries its own alt text, caption and structured data |
-| **`--auto`** | Keep whatever the camera or WhatsApp produced, then run `npm run photos -- --auto` | Ids are assigned in sorted filename order; the mapping is printed so you can check it |
-| **Portrait override** | Save the preferred hero image as `assets/source/portrait.jpg` | It always wins, whatever the album contains |
+| Pass | Rule |
+| --- | --- |
+| 1 | `autoMap` in `gallery.config.json` — exact filename → id. Already filled in for the four supplied `IMG-20260923-WA000*.jpg` files |
+| 2 | A file already named after its id (`04-stream.jpg`) is used as-is |
+| 3 | `--auto` assigns the next free id in `order`, in sorted filename order, and prints the mapping |
+
+Anything left over is **reported and skipped rather than guessed at**: a photograph published under
+the wrong caption is worse than one not published. A file may also be dropped at
+`assets/source/portrait.jpg` to override the hero image regardless of the album.
 
 The albums ids, their order and the primary image live in **`src/content/gallery.config.json`**,
 which both the build script and the site read — so the hero photograph, the social card, the album
@@ -85,6 +97,16 @@ For each photograph, in `public/images/gallery/`:
 - `<id>-900.webp` and `<id>-1600.webp` — WebP for browsers that take it
 - `src/content/gallery.generated.json` — the manifest that drives the gallery, including intrinsic
   dimensions so nothing shifts during load
+
+These derivatives **and** the manifest are committed. That is deliberate: Cloudflare Pages builds
+from this repository and has no Pillow toolchain, so the published images have to exist in git rather
+than being generated during deployment. Only the web-optimised versions are committed — the
+full-resolution originals are untracked, absent from the working tree and absent from the branch
+history (verified with `git rev-list --objects --all`).
+
+`portrait.jpg` is kept as a stable fallback at a predictable URL. When a gallery exists, the hero
+preload in the page head points at the real hero derivative (WebP and JPEG, with matching `srcset`
+and `sizes`) instead of the fallback, so the LCP image is never fetched twice.
 
 Plus, from the primary photograph: `public/portrait.jpg` (4:5 crop, head-and-shoulders) and a rebuilt
 `public/og-image.jpg` (1200×630 social card).

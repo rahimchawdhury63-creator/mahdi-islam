@@ -7,6 +7,7 @@
  * values so no duplicate or conflicting tags ever appear.
  */
 
+import { PRIMARY_PHOTO } from "../content/gallery";
 import { PERSON, SITE } from "../content/profile";
 import { absoluteUrl, ROUTES, type RouteMeta } from "./routes";
 import { jsonLd } from "./schema";
@@ -24,6 +25,18 @@ export const TILE = `${SITE.origin}/og-image.jpg`;
 
 export type HeadMetaItem = { name?: string; property?: string; content: string };
 
+export type HeadLink = {
+  rel: string;
+  href: string;
+  type?: string;
+  sizes?: string;
+  title?: string;
+  /** Responsive preload hints — must mirror the hero's <picture> exactly. */
+  imagesrcset?: string;
+  imagesizes?: string;
+  fetchpriority?: "high" | "low" | "auto";
+};
+
 export type HeadPayload = {
   title: string;
   description: string;
@@ -31,9 +44,47 @@ export type HeadPayload = {
   robots: string;
   keywords: string;
   meta: HeadMetaItem[];
-  links: { rel: string; href: string; type?: string; sizes?: string; title?: string }[];
+  links: HeadLink[];
   jsonLd: string;
 };
+
+/** Must match the `sizes` attribute on the hero <picture> in Hero.tsx. */
+const HERO_SIZES = "(max-width: 980px) 92vw, 420px";
+
+/**
+ * LCP preloads for the hero photograph.
+ *
+ * The hero is a <picture> with a WebP source and a JPEG fallback, so both are
+ * advertised and the browser fetches exactly one: the `type` attribute makes it
+ * skip the format it cannot decode. Preloading only the fallback (as an earlier
+ * revision did) cost 350 KB of critical bandwidth for an image that was never
+ * displayed.
+ */
+function heroPreloads(route: RouteMeta): HeadLink[] {
+  if (route.key !== "home") return [];
+  const photo = PRIMARY_PHOTO;
+  if (!photo) {
+    return [{ rel: "preload", href: PERSON.photo, type: "image/jpeg", fetchpriority: "high" }];
+  }
+  return [
+    {
+      rel: "preload",
+      href: photo.webp,
+      type: "image/webp",
+      imagesrcset: photo.webpSrcset,
+      imagesizes: HERO_SIZES,
+      fetchpriority: "high",
+    },
+    {
+      rel: "preload",
+      href: photo.src,
+      type: "image/jpeg",
+      imagesrcset: photo.srcset,
+      imagesizes: HERO_SIZES,
+      fetchpriority: "high",
+    },
+  ];
+}
 
 export function buildHead(route: RouteMeta): HeadPayload {
   const canonical = absoluteUrl(route.path);
@@ -104,7 +155,7 @@ export function buildHead(route: RouteMeta): HeadPayload {
     { rel: "me", href: `${SITE.origin}/` },
     { rel: "alternate", href: "/llms.txt", type: "text/plain", title: "LLM summary" },
     { rel: "alternate", href: "/llms-full.txt", type: "text/plain", title: "LLM full profile" },
-    { rel: "preload", href: "/portrait.jpg", type: "image/jpeg" },
+    ...heroPreloads(route),
   ];
 
   return {

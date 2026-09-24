@@ -46,6 +46,9 @@ function headMarkup(head) {
         `href="${escapeAttr(link.href)}"`,
         link.type ? `type="${link.type}"` : "",
         link.sizes ? `sizes="${link.sizes}"` : "",
+        link.imagesrcset ? `imagesrcset="${escapeAttr(link.imagesrcset)}"` : "",
+        link.imagesizes ? `imagesizes="${escapeAttr(link.imagesizes)}"` : "",
+        link.fetchpriority ? `fetchpriority="${link.fetchpriority}"` : "",
         link.title ? `title="${escapeAttr(link.title)}"` : "",
       ].filter(Boolean);
       return `    <link ${attrs.join(" ")} />`;

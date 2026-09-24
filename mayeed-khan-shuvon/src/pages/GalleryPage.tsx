@@ -23,7 +23,7 @@ export function GalleryPage() {
         title="Photographs"
         lead="Published by the subject for use in this profile. Originals are held privately; the versions shown here are resized for the web."
       >
-        <Gallery />
+        <Gallery eagerFirst />
       </Section>
 
       <Section id="about-images" eyebrow="02 · Use of these images" title="How these photographs may be used" variant="tinted">
