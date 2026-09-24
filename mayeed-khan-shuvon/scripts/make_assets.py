@@ -544,11 +544,9 @@ def build_social_card(portrait: Image.Image) -> Image.Image:
     name2, n2w, n2h = text_layer("Khan Shuvon", DISPLAY, name_size, INK)
 
     role_size = fit_size(
-        "LL.B (Honours) · IELTS Preparation Specialist", SANS_MEDIUM, text_width_max, int(21 * SS), 12
+        "First-Year LL.B (Honours) Student", SANS_MEDIUM, text_width_max, int(21 * SS), 12
     )
-    role, rw, rh = text_layer(
-        "LL.B (Honours) · IELTS Preparation Specialist", SANS_MEDIUM, role_size, ACCENT_DEEP
-    )
+    role, rw, rh = text_layer("First-Year LL.B (Honours) Student", SANS_MEDIUM, role_size, ACCENT_DEEP)
 
     edu_size = fit_size(
         "North East University Bangladesh · Sylhet, Bangladesh", SANS, text_width_max, int(18 * SS), 11

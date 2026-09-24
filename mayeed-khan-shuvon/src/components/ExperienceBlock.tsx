@@ -3,11 +3,11 @@ import { EXPERIENCE } from "../content/profile";
 export function ExperienceBlock() {
   return (
     <div className="experience">
-      {EXPERIENCE.map((job) => (
+      {EXPERIENCE.map((job, index) => (
         <article className="card card--exp" key={job.id} id={job.id}>
           <header className="card__head card__head--exp">
             <div>
-              <p className="card__eyebrow">Role {job.id === "ielts-tutor" ? "01" : "02"}</p>
+              <p className="card__eyebrow">Entry {String(index + 1).padStart(2, "0")}</p>
               <h3 className="card__title card__title--lg">{job.role}</h3>
               <p className="card__meta">
                 <span className="card__meta-strong">{job.organisation}</span>
@@ -34,7 +34,7 @@ export function ExperienceBlock() {
           <div className="exp-cols">
             <section className="exp-col" aria-labelledby={`${job.id}-resp`}>
               <h4 id={`${job.id}-resp`} className="exp-col__title">
-                Responsibilities
+                What the period involved
               </h4>
               <ul className="ticks ticks--numbered">
                 {job.responsibilities.map((item) => (

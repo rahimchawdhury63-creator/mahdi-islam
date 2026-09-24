@@ -16,7 +16,7 @@ export function Header({ currentPath }: { currentPath: string }) {
         <div className="utility-bar__inner">
           <p className="utility-bar__item">
             <span className="dot" aria-hidden="true" />
-            Available for full-time roles, traineeships &amp; IELTS coaching
+            Open to full-time roles, traineeships &amp; internships
           </p>
           <p className="utility-bar__item utility-bar__item--right">
             <a href={`tel:${CONTACT.telephone}`}>{CONTACT.telephoneDisplay}</a>
@@ -46,7 +46,7 @@ export function Header({ currentPath }: { currentPath: string }) {
               </span>
               <span className="brand__text">
                 <span className="brand__name">{PERSON.fullName}</span>
-                <span className="brand__role">LL.B (Hons) · IELTS Specialist · Sylhet</span>
+                <span className="brand__role">LL.B (Hons) · 1st Year · Sylhet</span>
               </span>
             </Link>
 

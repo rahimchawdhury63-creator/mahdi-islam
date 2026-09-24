@@ -55,7 +55,7 @@ export function Hero() {
             <span className="hero__plate-label">Fig. 1 — Profile</span>
             <span className="hero__plate-text">
               {PRIMARY_PHOTO ? PRIMARY_PHOTO.caption : "Profile portrait"} · {PERSON.fullName} · LL.B
-              (Hons), North East University Bangladesh · IELTS preparation specialist, Sylhet
+              (Hons), first year · North East University Bangladesh · Sylhet
             </span>
           </figcaption>
           {GALLERY_COUNT > 1 && (

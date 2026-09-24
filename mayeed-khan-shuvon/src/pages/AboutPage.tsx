@@ -31,11 +31,11 @@ export function AboutPage() {
     <>
       <PageHeader
         routeKey="about"
-        lead="Biography, career objective, working principles and professional direction of Md Mayeed Khan Shuvon — an LL.B (Honours) graduate and IELTS preparation specialist based in Zindabazar, Sylhet, Bangladesh."
+        lead="Biography, career objective, working principles and professional direction of Md Mayeed Khan Shuvon — a first-year LL.B (Honours) student at North East University Bangladesh, based in Zindabazar, Sylhet."
         answer={{
           question: "Who is Md Mayeed Khan Shuvon?",
           answer:
-            "Md Mayeed Khan Shuvon is a Bangladeshi law graduate and language educator. He holds an LL.B (Honours) from North East University Bangladesh, has four months of professional IELTS preparation experience across all four examination modules, speaks Bangla, English and Hindi, and is based at Zindabazar, Sylhet.",
+            "Md Mayeed Khan Shuvon is a Bangladeshi law student and multilingual professional. He is in his first year, first semester of the LL.B (Honours) programme at North East University Bangladesh, has completed HSC at Kulaura Govt. College and SSC at Nabin Chandra Govt. Model High School in Kulaura, Moulvibazar, has four months of experience as a student at Hexas (Hexa's), Sylhet, speaks Bangla, English and Hindi, and is based at Zindabazar, Sylhet.",
         }}
       />
 

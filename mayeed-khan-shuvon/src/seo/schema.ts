@@ -69,7 +69,7 @@ export const personNode = () => {
     nationality: { "@type": "Country", name: "Bangladesh", "@id": "https://www.wikidata.org/wiki/Q902" },
     description: PERSON.shortBio,
     disambiguatingDescription:
-      "Bangladeshi LL.B (Honours) graduate and IELTS preparation specialist from Kulaura, Moulvibazar, resident in Zindabazar, Sylhet.",
+      "Bangladeshi first-year LL.B (Honours) student at North East University Bangladesh, from Kulaura, Moulvibazar, resident in Zindabazar, Sylhet.",
     jobTitle: PERSON.jobTitle,
     url: `${ORIGIN}/`,
     mainEntityOfPage: { "@id": SITE.profilePageId },
@@ -108,7 +108,7 @@ export const personNode = () => {
     knowsAbout: [
       "IELTS preparation",
       "Academic English",
-      "English as a second language instruction",
+      "English as a second language study",
       "Legal studies",
       "Legal drafting",
       "Legal research",
@@ -119,23 +119,27 @@ export const personNode = () => {
       "Regulatory and compliance documentation",
       "Medical and clinical English communication",
     ],
-    hasOccupation: [
-      { "@id": CLEAN_ID("occupation-ielts-tutor") },
-      { "@id": CLEAN_ID("occupation-law-graduate") },
-    ],
+    hasOccupation: [{ "@id": CLEAN_ID("occupation-law-student") }],
     seeks: {
       "@type": "Demand",
       name: "Full-time employment, traineeship or collaborative project in legal support, academic administration, language instruction or documentation-focused roles",
       availability: "https://schema.org/InStock",
     },
-    alumniOf: EDUCATION.map((e) => ({ "@id": `${ORIGIN}/#${e.id}` })),
-    hasCredential: EDUCATION.map((e) => ({ "@id": `${ORIGIN}/#credential-${e.id}` })),
-    affiliation: { "@id": CLEAN_ID("referee-affiliation") },
+    alumniOf: EDUCATION.filter((e) => e.status === "completed").map((e) => ({
+      "@id": `${ORIGIN}/#${e.id}`,
+    })),
+    hasCredential: EDUCATION.filter((e) => e.status === "completed").map((e) => ({
+      "@id": `${ORIGIN}/#credential-${e.id}`,
+    })),
+    affiliation: [
+      { "@id": `${ORIGIN}/#llb-honours` },
+      { "@id": CLEAN_ID("hexas") },
+    ],
     knows: { "@type": "Person", "@id": CLEAN_ID("reference-person") },
     subjectOf: [
       { "@id": SITE.profilePageId },
       { "@id": CLEAN_ID("faqpage") },
-      { "@id": CLEAN_ID("occupation-ielts-tutor") },
+      { "@id": CLEAN_ID("occupation-law-student") },
     ],
     speakable: {
       "@type": "SpeakableSpecification",
@@ -152,8 +156,8 @@ export const websiteNode = () => ({
   url: `${ORIGIN}/`,
   name: SITE.siteName,
   alternateName: SITE.shortName,
-  description:
-    "Official professional profile of Md Mayeed Khan Shuvon — education, skills, IELTS preparation experience, languages, references and contact details.",
+    description:
+      "Official professional profile of Md Mayeed Khan Shuvon — education, skills, experience, languages, references and contact details.",
   inLanguage: "en",
   publisher: { "@id": SITE.entityId },
   copyrightHolder: { "@id": SITE.entityId },
@@ -210,7 +214,11 @@ export const educationNodes = () => {
       : {}),
   }));
 
-  const credentials = EDUCATION.map((e) => ({
+  // Only completed qualifications are emitted as credentials the person
+  // holds. The in-progress LL.B (Honours) appears via the institution node
+  // and the Person.affiliation edge — emitting it as a held credential would
+  // be a false graph edge.
+  const credentials = EDUCATION.filter((e) => e.status === "completed").map((e) => ({
     "@type": "EducationalOccupationalCredential",
     "@id": `${ORIGIN}/#credential-${e.id}`,
     name: e.programme,
@@ -227,15 +235,15 @@ export const educationNodes = () => {
 };
 
 export const occupationNodes = () => {
-  const ielts = EXPERIENCE[0];
+  const job = EXPERIENCE[0];
   return [
     {
       "@type": "Occupation",
-      "@id": CLEAN_ID("occupation-ielts-tutor"),
-      name: "IELTS Preparation Tutor",
-      alternateName: ["IELTS instructor", "English language tutor", "Academic English coach"],
+      "@id": CLEAN_ID("occupation-law-student"),
+      name: "Law Student (LL.B Honours)",
+      alternateName: ["First-year law student", "LL.B (Honours) student"],
       description:
-        "Teaches IELTS Listening, Reading, Writing and Speaking strategy, runs timed mock examinations, marks written work against the official band descriptors and maintains learner progress records.",
+        "First-year, first-semester LL.B (Honours) student at North East University Bangladesh, Sylhet — statutory reading, structured written argument and examination practice in an English-medium programme, alongside a self-declared IELTS preparation skill across all four modules and four months of practical study at Hexas (Hexa's), Sylhet.",
       occupationLocation: {
         "@type": "City",
         name: "Sylhet",
@@ -245,31 +253,22 @@ export const occupationNodes = () => {
           addressCountry: "BD",
         },
       },
-      skills: SKILLS.flatMap((s) => s.items.map((i) => i.name)).slice(0, 14),
-      experienceRequirements: {
-        "@type": "OccupationalExperienceRequirements",
-        monthsOfExperience: 4,
-        description: ielts.summary,
-      },
-      qualifications: "LL.B (Honours); academic English proficiency across all four IELTS modules",
-    },
-    {
-      "@type": "Occupation",
-      "@id": CLEAN_ID("occupation-law-graduate"),
-      name: "Law Graduate (LL.B Honours)",
-      alternateName: ["Legal researcher", "Paralegal", "Legal documentation assistant"],
-      description:
-        "Legal research, statutory interpretation, case briefing and structured drafting of legal and regulatory documents, produced through a four-year English-medium LL.B (Honours) degree.",
-      occupationLocation: { "@type": "Country", name: "Bangladesh" },
       skills: [
         "Legal research",
         "Statutory interpretation",
-        "Case briefing",
         "Legal drafting",
         "Critical reasoning",
+        "IELTS preparation",
+        "Academic English",
+        "Multilingual communication",
         "Regulatory and compliance documentation",
       ],
-      qualifications: "LL.B (Honours), North East University Bangladesh",
+      experienceRequirements: {
+        "@type": "OccupationalExperienceRequirements",
+        monthsOfExperience: 4,
+        description: job.summary,
+      },
+      qualifications: "Currently enrolled, LL.B (Honours), North East University Bangladesh; academic English proficiency across all four IELTS modules",
     },
   ];
 };
@@ -281,14 +280,19 @@ export const referenceNodes = () => {
       "@type": "Person",
       "@id": CLEAN_ID("reference-person"),
       name: ref.name,
-      affiliation: { "@id": CLEAN_ID("referee-affiliation") },
+      jobTitle: ref.role,
+      affiliation: { "@id": CLEAN_ID("hexas") },
       description:
-        "Named professional reference for Md Mayeed Khan Shuvon on academic discipline, reliability and language proficiency.",
+        "Named professional reference for Md Mayeed Khan Shuvon for his four-month student period at Hexas (Hexa's), Sylhet — academic discipline, reliability and language proficiency.",
     },
     {
-      "@type": "Organization",
-      "@id": CLEAN_ID("referee-affiliation"),
-      name: ref.affiliation,
+      "@type": "EducationalOrganization",
+      "@id": CLEAN_ID("hexas"),
+      name: "Hexas (Hexa's)",
+      alternateName: ["Hexa's Education", "Hexas Sylhet"],
+      url: "https://hexasbd.com/",
+      description:
+        "ICT and English language training institute in Sylhet, Bangladesh, offering IELTS, Spoken English and computer-based courses, with branches including Zindabazar, Majortila and Beanibazar.",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Sylhet",
@@ -341,7 +345,7 @@ export const pageNode = (route: RouteMeta) => ({
   reviewedBy: { "@id": SITE.entityId },
   audience: {
     "@type": "Audience",
-    audienceType: "Employers, recruitment agencies, universities, IELTS candidates",
+    audienceType: "Employers, recruitment agencies, universities and study partners",
   },
   ...(route.key === "faq" || route.key === "home"
     ? { significantLink: `${absoluteUrl("/contact/")}` }

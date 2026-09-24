@@ -1,5 +1,5 @@
 import { Link } from "../lib/nav";
-import { CONTACT, PERSON, SITE } from "../content/profile";
+import { CONTACT, PERSON, REFERENCES, SITE } from "../content/profile";
 import { ROUTES } from "../seo/routes";
 
 const year = 2026;
@@ -66,7 +66,8 @@ export function Footer() {
               Languages: <strong>{CONTACT.languagesSpoken}</strong>
             </p>
             <p className="site-footer__note">
-              Reference: Rizwan Rahim Chowdhury, Hexas, Sylhet
+              Reference: {REFERENCES[0].name} — {REFERENCES[0].role}, {REFERENCES[0].affiliation},{" "}
+              {REFERENCES[0].location}
             </p>
           </div>
         </div>

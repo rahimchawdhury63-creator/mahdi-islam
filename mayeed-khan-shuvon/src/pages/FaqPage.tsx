@@ -10,11 +10,11 @@ export function FaqPage() {
     <>
       <PageHeader
         routeKey="faq"
-        lead="Direct answers to the questions employers, recruitment agencies, universities and prospective IELTS candidates most often ask about Md Mayeed Khan Shuvon — written so that each answer stands on its own."
+        lead="Direct answers to the questions employers, recruitment agencies, universities and study partners most often ask about Md Mayeed Khan Shuvon — written so that each answer stands on its own."
         answer={{
           question: "Who is Md Mayeed Khan Shuvon and what does he do?",
           answer:
-            "Md Mayeed Khan Shuvon is an LL.B (Honours) graduate of North East University Bangladesh and an IELTS preparation specialist working in Sylhet, Bangladesh. He teaches and marks all four IELTS modules, works in Bangla, English and Hindi, and is available for full-time roles in legal support, academic administration, language instruction and documentation-focused positions.",
+            "Md Mayeed Khan Shuvon is a first-year, first-semester LL.B (Honours) student at North East University Bangladesh, working in Sylhet, Bangladesh. His self-declared skill is IELTS preparation across all four modules, he works in Bangla, English and Hindi, and he is available for full-time roles, traineeships and internships in legal support, academic administration, language training and documentation-focused positions.",
         }}
       />
 
@@ -61,7 +61,7 @@ export function FaqPage() {
       <Section id="more" eyebrow="03 · More detail" title="Where to read more">
         <Prose
           paragraphs={[
-            `This FAQ page answers ${FAQ.length} of the most common questions about Md Mayeed Khan Shuvon. Fuller treatment of each subject is published elsewhere on this site: the education page sets out his qualifications in full with the competency each one produced; the skills page details his IELTS teaching method and the four competency clusters; the experience page documents his four months of professional tutoring work responsibility by responsibility; and the contact page carries his telephone number, email address, both postal addresses and the documents available on request.`,
+            `This FAQ page answers ${FAQ.length} of the most common questions about Md Mayeed Khan Shuvon. Fuller treatment of each subject is published elsewhere on this site: the education page sets out his qualifications in full with the competency each stage produced; the skills page details his IELTS preparation method and the four competency clusters; the experience page documents his four months at Hexas (Hexa's), Sylhet, in context; and the contact page carries his telephone number, email address, both postal addresses and the documents available on request.`,
           ]}
         />
         <ul className="link-cards">
@@ -74,7 +74,7 @@ export function FaqPage() {
           <li>
             <Link to="/education/" className="link-card">
               <span className="link-card__title">Education</span>
-              <span className="link-card__desc">LL.B (Honours), HSC and SSC in full</span>
+              <span className="link-card__desc">LL.B (Honours) in progress, HSC and SSC in full</span>
             </Link>
           </li>
           <li>
@@ -86,7 +86,7 @@ export function FaqPage() {
           <li>
             <Link to="/experience/" className="link-card">
               <span className="link-card__title">Experience</span>
-              <span className="link-card__desc">Four months of IELTS tutoring, documented</span>
+              <span className="link-card__desc">Four months at Hexas (Hexa's), Sylhet, documented</span>
             </Link>
           </li>
           <li>

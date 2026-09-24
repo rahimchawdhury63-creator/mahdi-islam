@@ -68,15 +68,14 @@ export function ContactBlock() {
           <div>
             <dt>Enquiries welcome from</dt>
             <dd>
-              Employers, recruitment agencies, universities, examination centres and prospective IELTS
-              candidates
+              Employers, recruitment agencies, universities, examination centres and study partners
             </dd>
           </div>
           <div>
             <dt>Documents available on request</dt>
             <dd>
-              Curriculum vitae, SSC/HSC/LL.B certificates and transcripts, work-sample portfolio of
-              annotated IELTS Writing feedback
+              Curriculum vitae, SSC and HSC certificates and transcripts, first-year university
+              records, and IELTS practice samples annotated against the official band descriptors
             </dd>
           </div>
         </dl>

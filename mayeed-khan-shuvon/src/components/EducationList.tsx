@@ -35,6 +35,9 @@ export function EducationList({ intro, outro }: { intro?: string[]; outro?: stri
                 </p>
                 <p className="tag-row">
                   <span className="tag tag--level">{entry.level}</span>
+                  <span className={`tag${entry.status === "in-progress" ? " tag--status" : ""}`}>
+                    {entry.statusDisplay}
+                  </span>
                   <span className="tag">{entry.field}</span>
                 </p>
               </header>

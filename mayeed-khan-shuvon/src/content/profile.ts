@@ -18,7 +18,7 @@ export const SITE = {
   locale: "en_US",
   htmlLang: "en",
   publishedDate: "2026-01-01",
-  lastReviewed: "2026-09-23",
+  lastReviewed: "2026-09-24",
   /** Absolute URL of the primary entity for this site. */
   entityId: "https://mks.bsdc.info.bd/#person",
   orgId: "https://mks.bsdc.info.bd/#website",
@@ -40,9 +40,9 @@ export const PERSON = {
   familyName: "Shuvon",
   honorificPrefix: "Md",
   gender: "Male",
-  jobTitle: "LL.B (Honours) Graduate & IELTS Preparation Specialist",
+  jobTitle: "First-Year LL.B (Honours) Student, North East University Bangladesh",
   shortBio:
-    "Md Mayeed Khan Shuvon is an LL.B (Honours) graduate of North East University Bangladesh and an IELTS preparation specialist based in Zindabazar, Sylhet.",
+    "Md Mayeed Khan Shuvon is a first-year, first-semester LL.B (Honours) student at North East University Bangladesh, with a self-declared IELTS preparation skill and four months of practical experience as a student at Hexas (Hexa's), Sylhet. Based in Zindabazar, Sylhet, he works fluently in Bangla, English and Hindi.",
   dateOfBirth: "2002-09-14",
   nationality: "Bangladeshi",
   maritalStatus: "Single / Unmarried",
@@ -50,7 +50,7 @@ export const PERSON = {
   bloodGroupNote: "",
   photo: "/portrait.jpg",
   photoAlt:
-    "Portrait photograph of Md Mayeed Khan Shuvon, LL.B (Honours) graduate and IELTS preparation specialist from Sylhet, Bangladesh",
+    "Portrait photograph of Md Mayeed Khan Shuvon, a first-year LL.B (Honours) student at North East University Bangladesh, in Sylhet, Bangladesh",
 } as const;
 
 export const CONTACT = {
@@ -90,6 +90,13 @@ export type EducationEntry = {
   institution: string;
   location: string;
   field: string;
+  /**
+   * "completed" drives `alumniOf` / `hasCredential` edges in the Knowledge
+   * Graph; "in-progress" must never be emitted as a credential held.
+   */
+  status: "completed" | "in-progress";
+  /** Human-readable status line, e.g. "In progress — first year, first semester". */
+  statusDisplay: string;
   summary: string;
   highlights: string[];
 };
@@ -102,13 +109,15 @@ export const EDUCATION: EducationEntry[] = [
     institution: "North East University Bangladesh",
     location: "Sylhet, Bangladesh",
     field: "Law & Legal Studies",
+    status: "in-progress",
+    statusDisplay: "In progress — first year, first semester",
     summary:
-      "Four-year Bachelor of Laws (Honours) programme covering the constitutional, civil, criminal and procedural foundations of the Bangladeshi and common-law systems, taught and examined entirely in English.",
+      "Four-year Bachelor of Laws (Honours) programme at North East University Bangladesh covering the constitutional, civil, criminal and procedural foundations of the Bangladeshi and common-law systems. He is currently in first year, first semester of the programme, which is taught, examined and assessed entirely in English.",
     highlights: [
-      "Core modules in Constitutional Law, Law of Contract, Law of Torts, Criminal Law, Family Law and Land Law.",
-      "Procedural training in the Code of Civil Procedure and the Code of Criminal Procedure, including drafting of plaints, written statements and petitions.",
-      "Continuous assessment through moot-style argument, case-brief writing and statute interpretation exercises.",
-      "Sustained academic reading in English, which built the analytical reading speed later applied to IELTS preparation work.",
+      "First year, first semester of the four-year honours programme, with the full degree in progress at North East University Bangladesh, Sylhet.",
+      "English-medium study from the first semester: statutes, cases and course material read, drafted and examined in English.",
+      "Formal examination culture: structured written answers, statute reading and timed assessment conditions.",
+      "Sustained academic reading in English, which is building the analytical reading speed applied to IELTS preparation work.",
     ],
   },
   {
@@ -118,6 +127,8 @@ export const EDUCATION: EducationEntry[] = [
     institution: "Kulaura Govt. College",
     location: "Kulaura, Moulvibazar, Bangladesh",
     field: "Higher Secondary — Science / Humanities stream",
+    status: "completed",
+    statusDisplay: "Completed",
     summary:
       "Completed the Higher Secondary Certificate at one of the leading government colleges in the Kulaura upazila of Moulvibazar district, preparing the academic foundation for university-level legal study.",
     highlights: [
@@ -133,6 +144,8 @@ export const EDUCATION: EducationEntry[] = [
     institution: "Nabin Chandra Govt. Model High School",
     location: "Kulaura, Moulvibazar, Bangladesh",
     field: "Secondary Education",
+    status: "completed",
+    statusDisplay: "Completed",
     summary:
       "Completed secondary education at Nabin Chandra Govt. Model High School, a historic government institution in Kulaura, where foundational English grammar and composition skills were established.",
     highlights: [
@@ -155,9 +168,9 @@ export const SKILLS: SkillGroup[] = [
   {
     id: "ielts-preparation",
     title: "IELTS Preparation & Academic English",
-    level: "Primary specialisation",
+    level: "Primary skill — self-declared",
     summary:
-      "Structured, band-descriptor-driven coaching across all four IELTS modules — Listening, Reading, Writing and Speaking — with an emphasis on measurable score improvement rather than general conversation practice.",
+      "Structured, band-descriptor-driven preparation across all four IELTS modules — Listening, Reading, Writing and Speaking — with an emphasis on measurable score improvement rather than general conversation practice. The skill is self-declared on his curriculum vitae and was developed during his four months at Hexas (Hexa's), Sylhet, an institute whose course line includes a full IELTS range.",
     items: [
       {
         name: "Listening (Academic & General Training)",
@@ -187,31 +200,31 @@ export const SKILLS: SkillGroup[] = [
       {
         name: "Band descriptor analysis",
         detail:
-          "Every piece of learner writing is marked against the official Task Achievement, Coherence & Cohesion, Lexical Resource and Grammatical Range & Accuracy criteria so that feedback is diagnostic rather than general.",
+          "Every piece of written work is reviewed against the official Task Achievement, Coherence & Cohesion, Lexical Resource and Grammatical Range & Accuracy criteria so that feedback is diagnostic rather than general.",
       },
     ],
   },
   {
     id: "legal-academic",
     title: "Legal & Academic Competencies",
-    level: "LL.B (Honours) trained",
+    level: "In development — first-year LL.B (Honours)",
     summary:
-      "Discipline, precision and documentation skills developed through a full four-year law honours degree and applied to every professional task.",
+      "Discipline, precision and documentation skills, currently being built through first-year LL.B (Honours) study at North East University Bangladesh, with the remaining three years of the honours programme ahead.",
     items: [
       {
         name: "Legal research & statute reading",
         detail:
-          "Close reading of statutes, sections, provisos and schedules; locating and citing primary and secondary authority; briefing reported judgments into facts, issue, holding and ratio.",
+          "Close reading of statutes, sections, provisos and schedules; locating and citing primary and secondary authority; briefing judgments into facts, issue, holding and ratio — foundations being built through first-year legal study.",
       },
       {
         name: "Legal drafting & documentation",
         detail:
-          "Structured drafting of notices, applications, agreements and case notes with attention to defined terms, sequencing and internal consistency — transferable directly to clinical and regulatory documentation.",
+          "Structured drafting of notices, applications, agreements and case notes with attention to defined terms, sequencing and internal consistency — transferable directly to clinical and regulatory documentation once the degree is complete.",
       },
       {
         name: "Analytical & critical reasoning",
         detail:
-          "Issue spotting, ratio extraction, distinguishing precedent and constructing balanced written arguments under examination conditions.",
+          "Issue spotting, ratio extraction, distinguishing precedent and constructing balanced written arguments under examination conditions — an ongoing first-year development.",
       },
       {
         name: "Regulatory & compliance literacy",
@@ -225,27 +238,27 @@ export const SKILLS: SkillGroup[] = [
     title: "Communication & Professional Skills",
     level: "Applied daily",
     summary:
-      "Multilingual communication and calm, structured interpersonal handling built through tutoring, group study and college presentation work.",
+      "Multilingual communication and calm, structured interpersonal handling built through group study, institute coursework and college presentation work.",
     items: [
       {
         name: "Multilingual mediation",
         detail:
-          "Fluent switching between Bangla, English and Hindi, including on-the-spot explanation of technical ideas in two languages for learners of different first languages.",
+          "Fluent switching between Bangla, English and Hindi, including on-the-spot explanation of technical ideas in two languages for audiences of different first languages.",
       },
       {
         name: "Active listening & clarification",
         detail:
-          "Confirming understanding before responding, restating a learner's or interlocutor's point accurately, and asking precise follow-up questions to close information gaps.",
+          "Confirming understanding before responding, restating an interlocutor's point accurately, and asking precise follow-up questions to close information gaps.",
       },
       {
         name: "Empathetic feedback delivery",
         detail:
-          "Correcting written and spoken error without discouraging the learner: prioritising the two or three corrections that will raise a band score, and recording the rest for later cycles.",
+          "Correcting written and spoken error without discouraging the recipient: prioritising the two or three corrections that will raise a band score, and recording the rest for later cycles.",
       },
       {
         name: "Time-boxed task management",
         detail:
-          "Planning multi-week preparation schedules, tracking learner progress against targets, and holding strictly to timed mock-test conditions.",
+          "Planning multi-week preparation schedules, tracking progress against targets, and holding strictly to timed mock-test conditions.",
       },
     ],
   },
@@ -295,29 +308,28 @@ export type ExperienceEntry = {
 
 export const EXPERIENCE: ExperienceEntry[] = [
   {
-    id: "ielts-tutor",
-    role: "IELTS Preparation Tutor & Language Support Assistant",
-    organisation: "Private coaching practice (peer and learner-based tutoring)",
+    id: "hexas-sylhet",
+    role: "Student",
+    organisation: "Hexas (Hexa's)",
     location: "Sylhet, Bangladesh",
     period: "4 months",
-    duration: "4 months of continuous, supervised preparation and tutoring work",
-    type: "Professional training experience",
+    duration: "4 months as a student at Hexas (Hexa's)",
+    type: "Student programme — the four months recorded on his CV",
     summary:
-      "Four months of hands-on IELTS preparation work: diagnosing learner weaknesses, planning module-specific schedules, running timed practice under real examination conditions and returning written feedback marked against official band descriptors.",
+      "Four months as a student at Hexas (Hexa's) in Sylhet — an ICT and English language training institute whose course line includes IELTS, Spoken English and computer-based programmes. This is the four-month experience recorded on his curriculum vitae, and it is the period for which his professional reference, Rizwan Rahim Chowdhury (a digital content creator at the institute), can attest.",
     responsibilities: [
-      "Conducted diagnostic assessment of learners' current Listening, Reading, Writing and Speaking performance to establish a baseline band estimate.",
-      "Prepared structured session plans and multi-week study calendars aligned to each learner's target band and test date.",
-      "Marked Writing Task 1 and Task 2 responses against the four official assessment criteria and returned corrective feedback on lexis, cohesion and grammar.",
-      "Ran timed Listening and Reading mocks, then walked learners through every incorrect answer to identify whether the cause was vocabulary, pacing or trap-question logic.",
-      "Conducted one-to-one Speaking interviews in exam format, using recorded playback to correct pronunciation, stress and hesitation patterns.",
-      "Explained academic vocabulary, collocation and register to learners whose first language is Bangla, frequently mediating in Hindi for multilingual groups.",
-      "Maintained learner progress records, attendance notes and mock-test logs to evidence improvement over the preparation cycle.",
+      "Studied as a student at Hexas (Hexa's) in Sylhet, following the institute's structured, batch-timed programme of scheduled classes and regular assessment.",
+      "Practised academic English continuously across listening, reading, writing and speaking in a dedicated language-training environment.",
+      "Used the institute's ICT-supported facilities, alongside the computer-based courses it runs, for study and digital work.",
+      "Kept to a fixed schedule of attendance, submissions and assessment over the full four-month period.",
+      "Worked within the environment of the institute's professional content team, including its digital content creator — his named reference — who can attest to his discipline and reliability.",
     ],
     outcomes: [
-      "Built a reusable library of module-specific strategy notes, model answers and timed practice sets.",
-      "Developed the ability to give precise, evidence-based written feedback quickly and consistently.",
-      "Strengthened personal command of academic English under pressure, since every explanation had to be immediate and accurate.",
-      "Learned to manage a schedule of concurrent learners with different test dates and different weaknesses without losing quality of feedback.",
+      "The four months of practical experience recorded on his CV, attested by the named professional reference.",
+      "A self-declared IELTS preparation skill, developed in a professional IELTS-training environment.",
+      "Sustained practice of academic English under examination-focused conditions across all four modules.",
+      "Exposure to a professional digital content production operation alongside the institute's content team.",
+      "The discipline of a fixed schedule: punctuality, attendance and work completed to deadlines.",
     ],
   },
 ];
@@ -325,6 +337,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
 export type ReferenceEntry = {
   id: string;
   name: string;
+  role: string;
   affiliation: string;
   location: string;
   relationship: string;
@@ -335,10 +348,11 @@ export const REFERENCES: ReferenceEntry[] = [
   {
     id: "rizwan-rahim-chowdhury",
     name: "Rizwan Rahim Chowdhury",
-    affiliation: "Hexas",
+    role: "Digital content creator",
+    affiliation: "Hexas (Hexa's)",
     location: "Sylhet, Bangladesh",
-    relationship: "Professional reference",
-    note: "Professional reference for academic discipline, reliability and language proficiency. Contact details are provided on request with prior consent, in line with professional courtesy norms.",
+    relationship: "Professional reference — his four-month student period at Hexas (Hexa's)",
+    note: "Professional reference for his four-month student period at Hexas (Hexa's) in Sylhet, where he can speak to his academic discipline, reliability and language proficiency. Contact details are provided on request with prior consent, in line with professional courtesy norms.",
   },
 ];
 
@@ -355,29 +369,29 @@ export const LANGUAGES = [
     level: "Professional working proficiency",
     iso: "en",
     detail:
-      "Used daily for legal study, IELTS instruction, written feedback and formal correspondence. Strong academic reading and writing accuracy, with continued focus on formal written fluency.",
+      "Used daily for legal study, IELTS preparation, written feedback and formal correspondence. Strong academic reading and writing accuracy, with continued focus on formal written fluency.",
   },
   {
     name: "Hindi",
     level: "Conversational proficiency",
     iso: "hi",
     detail:
-      "Comfortable conversational fluency, including in multilingual teaching environments and spoken explanation of everyday and instructional content.",
+      "Comfortable conversational fluency, including in multilingual study environments and spoken explanation of everyday and instructional content.",
   },
 ];
 
 /** Short, quotable one-liners used in answer boxes and LLM summaries. */
 export const KEY_FACTS: { label: string; value: string }[] = [
   { label: "Full name", value: "Md Mayeed Khan Shuvon" },
-  { label: "Profession", value: "LL.B (Honours) graduate; IELTS preparation specialist" },
+  { label: "Profession", value: "First-year LL.B (Honours) student (North East University Bangladesh); IELTS preparation skill" },
   { label: "Location", value: "Zindabazar, Sylhet, Bangladesh" },
   { label: "Nationality", value: "Bangladeshi" },
   { label: "Date of birth", value: "14 September 2002" },
   { label: "Marital status", value: "Single / unmarried" },
   { label: "Languages", value: "Bangla, English, Hindi" },
-  { label: "Education", value: "LL.B (Honours), North East University Bangladesh" },
-  { label: "Experience", value: "4 months of IELTS preparation tutoring" },
+  { label: "Education", value: "LL.B (Honours) — first year, first semester (in progress), North East University Bangladesh" },
+  { label: "Experience", value: "4 months as a student at Hexas (Hexa's), Sylhet" },
   { label: "Phone", value: "+880 1825-723887" },
   { label: "Email", value: "shuvonkhan8947@gmail.com" },
-  { label: "Reference", value: "Rizwan Rahim Chowdhury, Hexas, Sylhet" },
+  { label: "Reference", value: "Rizwan Rahim Chowdhury — digital content creator, Hexas (Hexa's), Sylhet" },
 ];

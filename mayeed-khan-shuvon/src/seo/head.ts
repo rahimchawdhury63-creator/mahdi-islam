@@ -18,7 +18,7 @@ export const OG_IMAGE = {
   width: 1200,
   height: 630,
   type: "image/jpeg",
-  alt: "Md Mayeed Khan Shuvon — LL.B (Honours) graduate and IELTS preparation specialist, Sylhet, Bangladesh",
+  alt: "Md Mayeed Khan Shuvon — first-year LL.B (Honours) student, North East University Bangladesh, Sylhet, Bangladesh",
 } as const;
 
 export const TILE = `${SITE.origin}/og-image.jpg`;

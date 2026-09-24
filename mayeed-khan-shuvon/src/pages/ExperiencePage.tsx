@@ -10,11 +10,11 @@ export function ExperiencePage() {
     <>
       <PageHeader
         routeKey="experience"
-        lead="Four months of professional IELTS preparation experience in Sylhet, documented responsibility by responsibility, together with the professional reference who can attest to it."
+        lead="Four months of experience as a student at Hexas (Hexa's), Sylhet — an ICT and English language training institute — documented with its context, and with the professional reference who can attest to the period."
         answer={{
           question: "How much professional experience does Md Mayeed Khan Shuvon have?",
           answer:
-            "Md Mayeed Khan Shuvon has four months of professional IELTS preparation experience, carried out in Sylhet. In that period he conducted diagnostic assessments, built multi-week study plans, ran timed Listening and Reading mocks with full error analysis, marked Writing against the official band descriptors, conducted one-to-one Speaking interviews and maintained learner progress records.",
+            "Md Mayeed Khan Shuvon has four months of professional experience, carried out as a student at Hexas (Hexa's) in Sylhet, an ICT and English language training institute. That period — the four months recorded on his CV — is where his self-declared IELTS preparation skill was developed and practised. His professional reference for the period is Rizwan Rahim Chowdhury, a digital content creator at the institute.",
         }}
       />
 
@@ -31,13 +31,13 @@ export function ExperiencePage() {
       <Section
         id="transferable"
         eyebrow="02 · Transferable capability"
-        title="What four months of tutoring transfers into"
+        title="What four months at Hexas (Hexa's) transfers into"
         variant="tinted"
       >
         <div className="table-wrap">
           <table className="table">
             <caption className="table__caption">
-              Capabilities evidenced during IELTS preparation work and where they transfer
+              Capabilities evidenced during the four-month student period at Hexas (Hexa's), Sylhet, and where they transfer
             </caption>
             <thead>
               <tr>
@@ -48,36 +48,36 @@ export function ExperiencePage() {
             </thead>
             <tbody>
               <tr>
-                <th scope="row">Diagnostic assessment</th>
-                <td>Baseline band estimation from timed samples</td>
-                <td>Case intake, candidate screening, needs analysis, audit preparation.</td>
+                <th scope="row">Sustained academic English practice</th>
+                <td>Daily listening, reading, writing and speaking work in an examination-focused institute</td>
+                <td>Legal study in English, IELTS preparation, academic correspondence.</td>
               </tr>
               <tr>
-                <th scope="row">Precise written feedback</th>
-                <td>Band-descriptor-marked Writing scripts returned with demonstrated corrections</td>
-                <td>Clinical documentation, regulatory correspondence, editorial review.</td>
-              </tr>
-              <tr>
-                <th scope="row">Regime under fixed deadlines</th>
-                <td>Multiple concurrent learners with immovable test dates</td>
+                <th scope="row">Regime under a fixed schedule</th>
+                <td>Timetabled classes, regular attendance and assessment over four months</td>
                 <td>Filing deadlines, examination cycles, regulated reporting schedules.</td>
               </tr>
               <tr>
-                <th scope="row">Confidential record-keeping</th>
-                <td>Learner progress logs held and released only with permission</td>
-                <td>Patient records, personnel files, consent-governed data handling.</td>
+                <th scope="row">Digital and ICT working environment</th>
+                <td>ICT-supported study at an institute that also runs computer-based courses</td>
+                <td>Office software work, online platforms, remote working arrangements.</td>
               </tr>
               <tr>
-                <th scope="row">Explaining complexity simply</th>
-                <td>Teaching essay architecture and reading logic to non-specialists</td>
-                <td>Patient communication, client briefings, staff induction and training.</td>
+                <th scope="row">Professional team exposure</th>
+                <td>Working alongside the institute's content team, including his reference, a digital content creator</td>
+                <td>Client briefings, editorial review, content production support.</td>
+              </tr>
+              <tr>
+                <th scope="row">Confident multilingual communication</th>
+                <td>Practice across Bangla, English and Hindi in a multilingual setting</td>
+                <td>Client and staff communication, bilingual documentation, interpretation support.</td>
               </tr>
             </tbody>
           </table>
         </div>
         <AnswerBox
           question="Is four months of experience enough to be considered competent?"
-          answer="It is enough to evidence a working method, to be tested against real learners with real examination dates, and to produce documented outcomes. It is not senior-level experience and is not presented as such. What the four months demonstrate is reliability under a schedule, accurate written output and a structured approach to measurable improvement."
+          answer="It is enough to evidence reliability under a schedule, consistent attendance and a structured approach to an examination-focused environment. It is not senior-level experience and is not presented as such. His four months are stated exactly as supplied — four months, as a student at Hexas (Hexa's), attested by a named professional reference."
         />
       </Section>
 

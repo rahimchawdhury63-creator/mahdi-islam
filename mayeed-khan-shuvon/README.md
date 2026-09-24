@@ -1,8 +1,8 @@
 # Md Mayeed Khan Shuvon — Official Profile
 
 Pre-rendered **React + Vite + TypeScript** professional profile for **Md Mayeed Khan Shuvon**,
-LL.B (Honours) graduate of North East University Bangladesh and IELTS preparation specialist based in
-Zindabazar, Sylhet, Bangladesh.
+first-year, first-semester LL.B (Honours) student at North East University Bangladesh with a
+self-declared IELTS preparation skill, based in Zindabazar, Sylhet, Bangladesh.
 
 - **Live target:** <https://mks.bsdc.info.bd>
 - **Hosting:** Cloudflare Pages (free tier, fully static — no server, no functions)
@@ -209,13 +209,18 @@ each other by identifier — that is what lets a search engine reconcile the sam
 URLs. The graph contains:
 
 - `Person` (the entity centre) with `alternateName` (including the Bengali spelling), `jobTitle`,
-  `birthDate`, `nationality`, `email`, `telephone`, `knowsLanguage`, `knowsAbout`, `alumniOf`,
-  `hasCredential`, `hasOccupation`, `address`, `contactPoint` with opening hours, `seeks`
-  (availability for work), `speakable` and `subjectOf` edges.
+  `birthDate`, `nationality`, `email`, `telephone`, `knowsLanguage`, `knowsAbout`,
+  `alumniOf`/`hasCredential` (completed qualifications only — the in-progress LL.B is never emitted
+  as a held credential), `affiliation` (current university and Hexas), `hasOccupation`,
+  `address`, `contactPoint` with opening hours, `seeks` (availability for work), `speakable` and
+  `subjectOf` edges.
 - `WebSite`, `ProfilePage`/`AboutPage`/`CollectionPage`/`ContactPage` per route, `BreadcrumbList`.
-- Three `CollegeOrUniversity` institutions and three `EducationalOccupationalCredential` degrees.
-- Two `Occupation` nodes (IELTS tutor, law graduate) with skills and experience requirements.
-- A named referee `Person` plus their `Organization`, and postal addresses as `PostalAddress`/`Place`.
+- Three `CollegeOrUniversity` institutions and two `EducationalOccupationalCredential` qualifications
+  (SSC and HSC; the LL.B is in progress — first year, first semester).
+- One `Occupation` node (first-year law student) with skills; IELTS preparation is carried as
+  `knowsAbout`, not as an occupation.
+- A named referee `Person` (digital content creator) plus the Hexas (Hexa's)
+  `EducationalOrganization`, and postal addresses as `PostalAddress`/`Place`.
 - `FAQPage` with all 16 question/answer pairs.
 - `ItemList` of every published skill.
 - One `ImageObject` per photograph plus an `ImageGallery` album node when photographs are installed,

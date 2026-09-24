@@ -30,13 +30,13 @@ export function ContactPage() {
       >
         <Prose
           paragraphs={[
-            "Employers, recruitment agencies, universities and examination centres are asked to include the role, project or requirement, the organisation name, any deadline that applies, and the best times to call. Prospective IELTS candidates are asked to state the test date they are working towards, the module or band they are targeting, and their most recent practice scores if available.",
+            "Employers, recruitment agencies, universities and examination centres are asked to include the role, project or requirement, the organisation name, any deadline that applies, and the best times to call. Students and study partners are asked to state the programme, module or arrangement they are working towards, any relevant dates, and their preferred times to be reached.",
             "Enquiries are answered in the order received. Anything requiring a formal document — a curriculum vitae, a certificate copy, or a work sample — should be sent by email so that the request and the response are both recorded in writing.",
           ]}
         />
         <AnswerBox
           question="Is Md Mayeed Khan Shuvon available for remote or online work?"
-          answer="Yes. He is available for remote, hybrid and on-site engagements. IELTS preparation and language instruction are delivered online without any reduction in scope, since diagnostic samples, timed mocks, marked written feedback and one-to-one Speaking interviews all work in a virtual format."
+          answer="Yes. He is available for remote, hybrid and on-site engagements. Study support, peer practice and documentation work are all deliverable online without any reduction in scope, since timed practice, marked written feedback and structured oral exchange all work in a virtual format."
         />
       </Section>
 

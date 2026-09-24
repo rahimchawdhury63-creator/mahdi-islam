@@ -440,6 +440,13 @@ code, kbd, samp { font-family: var(--font-mono); font-size: 0.86em; }
 .tag--accent { background: var(--accent-soft); border-color: var(--accent-line); color: var(--accent-deep); }
 .tag--level { background: #fff; }
 
+/* In-progress qualification marker — keeps the record visibly honest. */
+.tag--status {
+  background: #fff7ea;
+  border-color: var(--accent, #b45309);
+  color: #92400e;
+}
+
 .pill {
   display: inline-block; font-size: 0.78rem; font-weight: 600; padding: 0.28rem 0.66rem;
   border-radius: 999px; background: var(--paper-tint); border: 1px solid var(--line); color: var(--ink-soft);

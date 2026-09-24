@@ -10,11 +10,11 @@ export function EducationPage() {
     <>
       <PageHeader
         routeKey="education"
-        lead="Full educational history of Md Mayeed Khan Shuvon: LL.B (Honours) at North East University Bangladesh, Higher Secondary Certificate at Kulaura Govt. College, and Secondary School Certificate at Nabin Chandra Govt. Model High School."
+        lead="Full educational history of Md Mayeed Khan Shuvon: LL.B (Honours) at North East University Bangladesh (first year, first semester — in progress), Higher Secondary Certificate at Kulaura Govt. College, and Secondary School Certificate at Nabin Chandra Govt. Model High School."
         answer={{
           question: "What is Md Mayeed Khan Shuvon's educational qualification?",
           answer:
-            "Md Mayeed Khan Shuvon completed LL.B (Honours) at North East University Bangladesh in Sylhet, the Higher Secondary Certificate (HSC) at Kulaura Govt. College in Moulvibazar, and the Secondary School Certificate (SSC) at Nabin Chandra Govt. Model High School in Kulaura, Moulvibazar.",
+            "Md Mayeed Khan Shuvon is in his first year, first semester of the LL.B (Honours) programme at North East University Bangladesh in Sylhet — in progress, with three years of the degree remaining. He completed the Higher Secondary Certificate (HSC) at Kulaura Govt. College in Moulvibazar, and the Secondary School Certificate (SSC) at Nabin Chandra Govt. Model High School in Kulaura, Moulvibazar.",
         }}
       />
 
@@ -22,7 +22,7 @@ export function EducationPage() {
         id="qualifications"
         eyebrow="01 · Qualifications"
         title="Educational qualification in full"
-        lead="Three institutions, roughly fourteen years of formal education, conducted in two languages and culminating in an English-medium law honours degree."
+        lead="Three institutions, thirteen-plus years of formal education, conducted in two languages, with the English-medium law honours degree in progress at first year."
       >
         <EducationList intro={EDUCATION_INTRO} outro={EDUCATION_OUTRO} />
       </Section>
@@ -35,8 +35,8 @@ export function EducationPage() {
       >
         <Prose
           paragraphs={[
-            "Each qualification produced a distinguishable, testable capability. Secondary education established grammatical accuracy and the habit of sustained written work. Higher secondary study established structured independent revision and timed examination performance. The LL.B (Honours) degree established analytical reading of dense primary text, statutory interpretation, structured written argument, and the documentary precision expected in legal practice.",
-            "The table below maps each competency to the stage at which it was acquired, so that an employer or admissions officer can trace every claim back to its source.",
+            "Each stage of the record has produced a distinguishable, testable capability. Secondary education established grammatical accuracy and the habit of sustained written work. Higher secondary study established structured independent revision and timed examination performance. The LL.B (Honours) programme — first year, first semester — is now adding analytical reading of dense primary text, statutory interpretation and structured written argument to that foundation.",
+            "The table below maps each competency to the stage at which it was acquired or is being acquired, so that an employer or admissions officer can trace every claim back to its source.",
           ]}
         />
         <div className="table-wrap">
@@ -55,32 +55,32 @@ export function EducationPage() {
               <tr>
                 <th scope="row">Grammatical accuracy in English</th>
                 <td>SSC — Nabin Chandra Govt. Model High School</td>
-                <td>Precise correction of IELTS candidate writing; reliable formal correspondence.</td>
+                <td>Precise written output in English; reliable formal correspondence.</td>
               </tr>
               <tr>
                 <th scope="row">Structured independent study</th>
                 <td>HSC — Kulaura Govt. College</td>
-                <td>Multi-week preparation calendars built for learners against fixed test dates.</td>
+                <td>Multi-week self-directed study calendars built against fixed examination dates.</td>
               </tr>
               <tr>
                 <th scope="row">Timed examination performance</th>
-                <td>HSC and LL.B (Honours)</td>
-                <td>Running IELTS mocks under true test conditions and coaching pacing failures.</td>
+                <td>HSC and LL.B (Honours), first year</td>
+                <td>Practice under true test conditions, including timed IELTS practice sets.</td>
               </tr>
               <tr>
                 <th scope="row">Analytical reading of dense text</th>
-                <td>LL.B (Honours) — North East University Bangladesh</td>
-                <td>Reading strategy instruction: skimming, scanning and trap-question logic.</td>
+                <td>LL.B (Honours), first year — North East University Bangladesh</td>
+                <td>Skimming, scanning and careful reading of statutes and long-form text.</td>
               </tr>
               <tr>
                 <th scope="row">Statutory and documentary precision</th>
-                <td>LL.B (Honours) — North East University Bangladesh</td>
+                <td>LL.B (Honours), first year — North East University Bangladesh</td>
                 <td>Documentation discipline, defined terminology and internal consistency in all written output.</td>
               </tr>
               <tr>
                 <th scope="row">Structured written argument</th>
-                <td>LL.B (Honours) — North East University Bangladesh</td>
-                <td>Teaching Task 2 essay architecture: thesis, topic sentences, concession, conclusion.</td>
+                <td>LL.B (Honours), first year — North East University Bangladesh</td>
+                <td>Essay and answer architecture: thesis, development, concession, conclusion.</td>
               </tr>
             </tbody>
           </table>

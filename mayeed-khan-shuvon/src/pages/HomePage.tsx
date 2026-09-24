@@ -38,16 +38,16 @@ export function HomePage() {
         id="profile"
         eyebrow="01 · Professional summary"
         title={`Who ${PERSON.fullName} is`}
-        lead="An LL.B (Honours) graduate and IELTS preparation specialist, working in three languages from Sylhet, Bangladesh."
+        lead="A first-year LL.B (Honours) student at North East University Bangladesh, working in three languages from Sylhet, Bangladesh."
         variant="tinted"
       >
         <AnswerBox
           question="Who is Md Mayeed Khan Shuvon?"
-          answer="Md Mayeed Khan Shuvon is an LL.B (Honours) graduate of North East University Bangladesh and an IELTS preparation specialist based in Zindabazar, Sylhet. He teaches Listening, Reading, Writing and Speaking strategy, marks written work against the official band descriptors, and works in Bangla, English and Hindi."
+          answer="Md Mayeed Khan Shuvon is a first-year, first-semester LL.B (Honours) student at North East University Bangladesh in Sylhet. He completed four months of study at Hexas (Hexa's), an ICT and English language training institute, his self-declared skill is IELTS preparation across all four modules, and he works in Bangla, English and Hindi."
           meta={[
             { label: "Profession", value: PERSON.jobTitle },
-            { label: "Education", value: "LL.B (Honours), North East University Bangladesh" },
-            { label: "Experience", value: "4 months of IELTS preparation tutoring" },
+            { label: "Education", value: "LL.B (Honours) — first year, North East University Bangladesh" },
+            { label: "Experience", value: "4 months as a student at Hexas (Hexa's), Sylhet" },
             { label: "Location", value: "Zindabazar, Sylhet, Bangladesh" },
           ]}
         />
@@ -89,9 +89,10 @@ export function HomePage() {
         <Prose paragraphs={CAREER_OBJECTIVE.expansion} />
         <Callout title="What that means in practice">
           <p>
-            He is available for full-time roles, structured traineeships and collaborative projects in
-            Sylhet and beyond — including remote and hybrid arrangements — in legal support, academic
-            administration, English language instruction and documentation-focused positions.
+            He is available for full-time roles, structured traineeships, internships and collaborative
+            projects in Sylhet and beyond — including remote and hybrid arrangements — in legal support,
+            academic administration, English language and IELTS preparation support, and
+            documentation-focused positions.
           </p>
         </Callout>
       </Section>
@@ -100,7 +101,7 @@ export function HomePage() {
         id="education"
         eyebrow="04 · Education"
         title="Educational qualification"
-        lead="SSC at Nabin Chandra Govt. Model High School, HSC at Kulaura Govt. College, and LL.B (Honours) at North East University Bangladesh."
+        lead="SSC at Nabin Chandra Govt. Model High School, HSC at Kulaura Govt. College, and LL.B (Honours) at North East University Bangladesh — first year, first semester."
         variant="tinted"
       >
         <EducationList intro={EDUCATION_INTRO} outro={EDUCATION_OUTRO} />
@@ -110,7 +111,7 @@ export function HomePage() {
         id="skills"
         eyebrow="05 · Skills"
         title="Skills and competencies"
-        lead="IELTS preparation and academic English as the primary specialisation, supported by legal, communication and digital competencies."
+        lead="IELTS preparation and academic English as the primary self-declared skill, supported by legal, communication and digital competencies."
       >
         <Prose paragraphs={SKILLS_INTRO} />
         <SkillsBlock
@@ -132,7 +133,7 @@ export function HomePage() {
         id="experience"
         eyebrow="06 · Experience"
         title="Professional experience"
-        lead="Four months of continuous IELTS preparation tutoring in Sylhet, presented with its method and its evidence."
+        lead="Four months as a student at Hexas (Hexa's), Sylhet — presented with its context, its evidence and its named reference."
         variant="tinted"
       >
         <Prose paragraphs={EXPERIENCE_INTRO} />
@@ -154,7 +155,7 @@ export function HomePage() {
         id="principles"
         eyebrow="08 · Working principles"
         title="Working principles"
-        lead="Six commitments that describe how he works, drawn from legal training and applied to language instruction."
+        lead="Six commitments that describe how he works, drawn from legal study and applied to preparation and professional work."
         variant="tinted"
       >
         <ul className="principles">

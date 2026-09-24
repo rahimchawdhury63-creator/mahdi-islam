@@ -1,4 +1,4 @@
-import { CONTACT, LANGUAGES, PERSON } from "../content/profile";
+import { CONTACT, LANGUAGES, PERSON, REFERENCES } from "../content/profile";
 
 export function LanguageTable() {
   return (
@@ -65,24 +65,29 @@ export function PersonalParticulars() {
 }
 
 export function ReferenceCard() {
+  const reference = REFERENCES[0];
   return (
     <div className="reference-card">
       <dl className="reference-card__dl">
         <div>
           <dt>Reference name</dt>
-          <dd>Rizwan Rahim Chowdhury</dd>
+          <dd>{reference.name}</dd>
+        </div>
+        <div>
+          <dt>Role</dt>
+          <dd>{reference.role}</dd>
         </div>
         <div>
           <dt>Organisation</dt>
-          <dd>Hexas</dd>
+          <dd>{reference.affiliation}</dd>
         </div>
         <div>
           <dt>Location</dt>
-          <dd>Sylhet, Bangladesh</dd>
+          <dd>{reference.location}</dd>
         </div>
         <div>
           <dt>Relationship</dt>
-          <dd>Professional reference — academic discipline, reliability and language proficiency</dd>
+          <dd>Professional reference — his four-month student period at Hexas (Hexa's)</dd>
         </div>
       </dl>
       <p className="reference-card__note">

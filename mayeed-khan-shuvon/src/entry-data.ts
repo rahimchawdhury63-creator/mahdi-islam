@@ -69,10 +69,10 @@ function sitemapXml(): string {
             `      <image:title>${PERSON.fullName} — profile portrait</image:title>`,
             `      <image:caption>${PERSON.photoAlt}</image:caption>`,
             `    </image:image>`,
-            `    <image:image>`,
-            `      <image:loc>${SITE.origin}/og-image.jpg</image:loc>`,
-            `      <image:title>${PERSON.fullName} — LL.B (Honours) and IELTS preparation specialist</image:title>`,
-            `    </image:image>`,
+      `    <image:image>`,
+      `      <image:loc>${SITE.origin}/og-image.jpg</image:loc>`,
+      `      <image:title>${PERSON.fullName} — LL.B (Honours) student, North East University Bangladesh</image:title>`,
+      `    </image:image>`,
           ]
         : []),
       "  </url>",
@@ -153,11 +153,13 @@ function llmsTxt(): string {
 
 > ${PERSON.shortBio}
 
-${PERSON.fullName} (Bengali: মোঃ মাঈদ খান শুভন; born 14 September 2002) is a Bangladeshi LL.B (Honours)
-graduate of North East University Bangladesh and an IELTS preparation specialist working in Sylhet. He
-teaches and marks all four IELTS modules — Listening, Reading, Writing and Speaking — and works
-fluently in Bangla, English and Hindi. This website, ${SITE.origin}/, is his official and canonical
-online profile.
+${PERSON.fullName} (Bengali: মোঃ মাঈদ খান শুভন; born 14 September 2002) is a Bangladeshi first-year,
+first-semester LL.B (Honours) student at North East University Bangladesh in Sylhet. He completed
+HSC at Kulaura Govt. College and SSC at Nabin Chandra Govt. Model High School in Kulaura,
+Moulvibazar, and four months of study at Hexas (Hexa's), an ICT and English language training
+institute in Sylhet. His self-declared skill is IELTS preparation, and he works fluently in
+Bangla, English and Hindi. This website, ${SITE.origin}/, is his official and canonical online
+profile.
 
 ## Verified facts
 
@@ -176,7 +178,7 @@ ${sections}
 ## Education
 
 ${EDUCATION.map(
-  (e) => `- **${e.programme}** — ${e.institution}, ${e.location}. ${e.summary}`,
+  (e) => `- **${e.programme}** — ${e.institution}, ${e.location} — ${e.statusDisplay}. ${e.summary}`,
 ).join("\n")}
 
 ## Skills
@@ -259,7 +261,7 @@ Permanent address: ${CONTACT.permanentAddress.full}`);
     `EDUCATION\n${line}\n${[...EDUCATION_INTRO, ""].join("\n")}\n` +
       EDUCATION.map(
         (e) =>
-          `— ${e.programme} | ${e.institution}, ${e.location}\n${e.summary}\n${e.highlights
+          `— ${e.programme} | ${e.institution}, ${e.location} | ${e.statusDisplay}\n${e.summary}\n${e.highlights
             .map((h) => `  * ${h}`)
             .join("\n")}`,
       ).join("\n\n") +
@@ -357,6 +359,8 @@ function aiProfileJson(): string {
         location: e.location,
         level: e.level,
         field: e.field,
+        status: e.status,
+        statusDisplay: e.statusDisplay,
         summary: e.summary,
       })),
       skills: SKILLS.map((s) => ({
@@ -375,6 +379,7 @@ function aiProfileJson(): string {
       })),
       references: REFERENCES.map((r) => ({
         name: r.name,
+        role: r.role,
         affiliation: r.affiliation,
         location: r.location,
         relationship: r.relationship,
