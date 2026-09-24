@@ -1,0 +1,63 @@
+# Build output
+dist/
+dist-server/
+.wrangler/
+
+# Dependencies
+node_modules/
+
+# Generated artwork working files (the committed results live in public/)
+.fonts/
+
+# ---------------------------------------------------------------------------
+# Source photographs are personal files and are NEVER committed. Only the
+# derivatives generated from them are published (see the note below). Drop new
+# originals in assets/source/ and run `npm run photos`.
+# ---------------------------------------------------------------------------
+assets/source/*
+!assets/source/.gitkeep
+!assets/source/README.md
+!assets/source/gallery
+assets/source/gallery/*
+!assets/source/gallery/README.md
+!assets/source/gallery/.gitkeep
+
+# ---------------------------------------------------------------------------
+# Web derivatives ARE committed, deliberately.
+#
+# Cloudflare Pages builds from this repository and its image has no Python /
+# Pillow toolchain, so `npm run photos` cannot run during deployment. The
+# published images and the manifest they are described by must therefore be in
+# the repository for the site to build:
+#
+#   public/images/gallery/*.jpg|webp   responsive derivatives
+#   src/content/gallery.generated.json manifest consumed by src/content/gallery.ts
+#
+# To change the artwork, run `npm run photos` locally and commit the result.
+# ---------------------------------------------------------------------------
+
+# Set to true to stop tracking the published derivatives instead.
+# public/images/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Tooling caches
+.vite/
+.cache/
+__pycache__/
+*.pyc
